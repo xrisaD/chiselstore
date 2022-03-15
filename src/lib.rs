@@ -102,3 +102,4 @@ pub use server::Consistency;
 pub use server::StoreCommand;
 pub use server::StoreServer;
 pub use server::StoreTransport;
+pub use server::KVSnapshot;

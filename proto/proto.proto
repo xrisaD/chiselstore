@@ -23,47 +23,122 @@ message QueryRow {
     repeated string values = 1;
 }
 
-message VoteRequest {
-    uint64 from_id = 1;
-    uint64 term = 2;
-    uint64 last_log_index = 3;
-    uint64 last_log_term = 4;
+message B {
+    uint32 n = 1;
+    uint64 priority = 2;
+    uint64 pid = 3;
 }
 
-message VoteResponse {
-    uint64 from_id = 1;
-    uint64 term = 2;
-    bool vote_granted = 3;
-}
-
-message AppendEntriesRequest {
-    uint64 from_id = 1;
-    uint64 term = 2;
-    uint64 prev_log_index = 3;
-    uint64 prev_log_term = 4;
-    repeated LogEntry entries = 5;
-    uint64 commit_index = 6;
-}
-
-message LogEntry {
+message Command {
     uint64 id = 1;
     string sql = 2;
-    uint64 index = 3;
-    uint64 term = 4;
 }
 
-message AppendEntriesResponse {
-    uint64 from_id = 1;
-    uint64 term = 2;
-    bool success = 3;
-    uint64 last_index = 4;
-    optional uint64 mismatch_index = 5;
+
+message Commands {
+    repeated Command entries= 1;
+}
+
+message SyncItem {
+    message SnapshotType {
+        oneof v {
+            string s = 1;
+            Command phantomdata = 2; 
+        }
+    }
+    
+    oneof v {
+        Commands storecommands = 1;
+        SnapshotType snapshot = 2;
+    }
+}
+
+message Metadata {
+    repeated int32 metadata = 3;
+}
+
+message StopSign {
+    uint32 config_id = 1;
+    repeated uint64 nodes = 2;
+    optional Metadata metadata = 3;
+}
+
+message TheMessage {
+    uint64 from = 1;
+    uint64 to = 2;
+    oneof message {
+        Prepare prepare = 3;
+        Promise promise = 4;
+        FirstAccept firstaccept = 5;
+        DecideStopSign decidestopsign = 6;
+        Decide decide = 7;
+        AcceptedStopSign acceptedstopsign = 8;
+        Accepted accepted = 9;
+        AcceptSync acceptsync = 10;
+        AcceptStopSign acceptstopsign = 11;
+        AcceptDecide acceptdecide = 12;
+    }
+}
+
+message Prepare {
+    B n = 1;
+    uint64 ld = 2;
+    B n_accepted = 3;
+    uint64 la = 4;
+}
+
+message Promise {
+    B n = 1;
+    B n_accepted = 2;
+    optional SyncItem syncitem = 3;
+    uint64 ld = 4;
+    uint64 la = 5;
+    optional StopSign stopsign = 6;
+}
+
+message FirstAccept {
+    B n = 1;
+    repeated Command entries = 2;
+}
+
+message DecideStopSign {
+    B n = 1;
+}
+
+message Decide {
+    B n = 1;
+    uint64 ld = 2;
+}
+
+message AcceptedStopSign {
+    B n = 1;
+}
+
+message Accepted {
+    B n = 1;
+    int64 la = 2;
+}
+
+message AcceptSync {
+    B n = 1;
+    SyncItem sync_item = 2;
+    uint64 sync_idx= 3;
+    optional uint64 decide_idx = 4;
+    optional StopSign sopsign = 5;
+}
+
+message AcceptStopSign {
+    B n = 1;
+    StopSign ss = 2;
+}
+
+message AcceptDecide {
+    B n = 1;
+    uint64 ld = 2;
+    repeated Command entries = 3;
 }
 
 service RPC {
     rpc Execute(Query) returns (QueryResults);
-    rpc Vote(VoteRequest) returns (Void);
-    rpc RespondToVote(VoteResponse) returns (Void);
-    rpc AppendEntries(AppendEntriesRequest) returns (Void);
-    rpc RespondToAppendEntries(AppendEntriesResponse) returns (Void);
+    rpc message(TheMessage) returns (Void);
 }
