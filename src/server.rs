@@ -75,7 +75,7 @@ pub struct StoreCommand {
 
 #[derive(Clone, Debug)]
 pub struct KVSnapshot {
-    snapshotted: HashMap<u64, String>,
+    pub snapshotted: HashMap<u64, String>,
 }
 
 impl Snapshot<StoreCommand> for KVSnapshot {

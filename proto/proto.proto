@@ -39,48 +39,47 @@ message Commands {
     repeated Command entries= 1;
 }
 
-message SyncItem {
-    message SnapshotType {
-        oneof v {
-            string s = 1;
-            Command phantomdata = 2; 
-        }
-    }
-    
+message NoneOrPhantom {
+    string t = 1;
+}
+message TheSnapshotType {
+    string t = 1;
+    map<uint64, string> s = 2;
+}
+
+message TheSyncItem {
     oneof v {
         Commands storecommands = 1;
-        SnapshotType snapshot = 2;
+        TheSnapshotType snapshottype = 2;
+        NoneOrPhantom noneorphantom = 3;
     }
 }
 
-message Metadata {
-    repeated int32 metadata = 3;
-}
 
 message StopSign {
     uint32 config_id = 1;
     repeated uint64 nodes = 2;
-    optional Metadata metadata = 3;
+    repeated int32 metadata = 3;
 }
 
 message TheMessage {
     uint64 from = 1;
     uint64 to = 2;
     oneof message {
-        Prepare prepare = 3;
+        ThePrepare prepare = 3;
         Promise promise = 4;
         FirstAccept firstaccept = 5;
         DecideStopSign decidestopsign = 6;
-        Decide decide = 7;
+        TheDecide decide = 7;
         AcceptedStopSign acceptedstopsign = 8;
-        Accepted accepted = 9;
+        TheAccepted accepted = 9;
         AcceptSync acceptsync = 10;
         AcceptStopSign acceptstopsign = 11;
         AcceptDecide acceptdecide = 12;
     }
 }
 
-message Prepare {
+message ThePrepare {
     B n = 1;
     uint64 ld = 2;
     B n_accepted = 3;
@@ -90,7 +89,7 @@ message Prepare {
 message Promise {
     B n = 1;
     B n_accepted = 2;
-    optional SyncItem syncitem = 3;
+    optional TheSyncItem syncitem = 3;
     uint64 ld = 4;
     uint64 la = 5;
     optional StopSign stopsign = 6;
@@ -105,7 +104,7 @@ message DecideStopSign {
     B n = 1;
 }
 
-message Decide {
+message TheDecide {
     B n = 1;
     uint64 ld = 2;
 }
@@ -114,17 +113,17 @@ message AcceptedStopSign {
     B n = 1;
 }
 
-message Accepted {
+message TheAccepted {
     B n = 1;
-    int64 la = 2;
+    uint64 la = 2;
 }
 
 message AcceptSync {
     B n = 1;
-    SyncItem sync_item = 2;
+    TheSyncItem sync_item = 2;
     uint64 sync_idx= 3;
     optional uint64 decide_idx = 4;
-    optional StopSign sopsign = 5;
+    optional StopSign stopsign = 5;
 }
 
 message AcceptStopSign {
