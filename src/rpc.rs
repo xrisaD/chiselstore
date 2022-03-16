@@ -24,10 +24,10 @@ pub mod proto {
 use proto::rpc_client::RpcClient;
 // define all types of messages that Raft replicas pass between each other
 use proto::{
-    Query, QueryResults, QueryRow, Void, TheMessage, B, AcceptedStopSign, AcceptDecide, AcceptSync, Command, StopSign, TheDecide, TheAccepted, Commands, ThePrepare, TheSyncItem, TheSnapshotType, NoneOrPhantom, FirstAccept
+    Query, QueryResults, QueryRow, Void, TheMessage, B, ThePromise, AcceptedStopSign, AcceptDecide, AcceptSync, Command, StopSign, TheDecide, TheAccepted, Commands, ThePrepare, TheSyncItem, TheSnapshotType, NoneOrPhantom, FirstAccept, AcceptStopSign, DecideStopSign
 };
 
-use proto::the_message::Message::{ Acceptedstopsign, Acceptdecide, Acceptsync, Decide, Accepted, Prepare, Firstaccept};
+use proto::the_message::Message::{ Acceptedstopsign, Promise, Acceptdecide, Acceptsync, Decide, Accepted, Prepare, Firstaccept, Acceptstopsign, Decidestopsign};
 use proto::the_sync_item::V:: {Storecommands, Snapshottype, Noneorphantom};
 
 type NodeAddrFn = dyn Fn(u64) -> String + Send + Sync;
@@ -175,18 +175,24 @@ impl StoreTransport for RpcTransport {
             }
             PaxosMsg::AcceptStopSign(x) => {
                 let ballot = Some(B{n: x.n.n as u32, priority: x.n.priority as u64, pid: x.n.pid as u64});
-
                 let nodes = x.ss.nodes;
-
                 let metadata = x.ss.metadata.unwrap()
                     .iter()
                     .map(|z| {
                         *z as i32
                     }).collect();
 
-                let stopsign = Some(StopSign {config_id: x.ss.config_id, nodes, metadata});
+                let stopsign = Some(StopSign {config_id: x.ss.config_id as u32, nodes, metadata});
+                let themessage = Acceptstopsign(AcceptStopSign{n:ballot, ss:stopsign});
+                let request = TheMessage {to, from, message: Some(themessage)};
 
-
+                let peer = (self.node_addr)(to_id);
+                let pool = self.connections.clone();
+                tokio::task::spawn(async move {
+                    let mut client = pool.connection(peer).await;
+                    let request = tonic::Request::new(request.clone());
+                    client.conn.message(request).await.unwrap();
+                });
             }
             PaxosMsg::AcceptSync(x) => {
                 let ballot = Some(B{n: x.n.n as u32, priority: x.n.priority as u64, pid: x.n.pid as u64});
@@ -265,7 +271,17 @@ impl StoreTransport for RpcTransport {
                 });
             }
             PaxosMsg::DecideStopSign(x) => {
+                let ballot = Some(B{n: x.n.n as u32, priority: x.n.priority as u64, pid: x.n.pid as u64});
+                let themessage = Decidestopsign(DecideStopSign{n:ballot});
+                let request = TheMessage {to, from, message: Some(themessage)};
 
+                let peer = (self.node_addr)(to_id);
+                let pool = self.connections.clone();
+                tokio::task::spawn(async move {
+                    let mut client = pool.connection(peer).await;
+                    let request = tonic::Request::new(request.clone());
+                    client.conn.message(request).await.unwrap();
+                });
             }
             PaxosMsg::FirstAccept(x) => {
                 let ballot = Some(B{n: x.n.n as u32, priority: x.n.priority as u64, pid: x.n.pid as u64});
@@ -308,7 +324,66 @@ impl StoreTransport for RpcTransport {
             PaxosMsg::PrepareReq => {
                 
             }
-            PaxosMsg::Promise(x) => {}
+            PaxosMsg::Promise(x) => {
+                let ballot_n = Some(B{n: x.n.n as u32, priority: x.n.priority as u64, pid: x.n.pid as u64});
+                let ballot_n_accepted = Some(B{n: x.n_accepted.n as u32, priority: x.n_accepted.priority as u64, pid: x.n_accepted.pid as u64});
+                //create syncitem
+                let mut sync_item = None;
+                match x.sync_item.unwrap() {
+                    SyncItem::Entries(y) => {
+                        let commands: Vec<Command> = y
+                                    .iter()
+                                    .map(|entry| {
+                                        let id = entry.id as u64;
+                                        let sql = entry.sql.clone();
+                                        Command {id, sql}
+                                    }).collect();
+                        sync_item = Some(TheSyncItem{v: Some(Storecommands(Commands {entries: commands}))});
+                    }
+                    SyncItem::Snapshot(y) => {
+                         match y {
+                            SnapshotType::_Phantom(_) => {
+                                sync_item = Some(TheSyncItem{v: Some(Noneorphantom(NoneOrPhantom {t:"phantom".to_string()}))});
+                            } 
+                            SnapshotType::Complete(s) => {
+                                sync_item = Some(TheSyncItem{v: Some(Snapshottype(TheSnapshotType {t:"complete".to_string(), s: s.snapshotted}))});
+                            }
+                            SnapshotType::Delta(s) => { 
+                                sync_item = Some(TheSyncItem{v: Some(Snapshottype(TheSnapshotType {t:"delta".to_string(), s: s.snapshotted}))});  
+                            }
+                        }
+                    }
+                    SyncItem::None => {
+                        sync_item = Some(TheSyncItem{v: Some(Noneorphantom(NoneOrPhantom {t:"none".to_string()}))});
+                    }
+                }
+
+                // create stop sign
+                let ss = x.stopsign.unwrap();
+                let nodes = ss.nodes
+                            .iter()
+                            .map(|z| {
+                                *z as u64
+                            }).collect();
+
+                let metadata = ss.metadata.unwrap()
+                                .iter()
+                                .map(|z| {
+                                    *z as i32
+                                }).collect();
+                let stopsign = Some(StopSign {config_id: ss.config_id, nodes, metadata});
+                
+                let themessage = Promise(ThePromise{n:ballot_n, n_accepted: ballot_n_accepted, syncitem: sync_item, ld: x.ld as u64, la: x.la as u64, stopsign: stopsign});
+                let request = TheMessage {to, from, message: Some(themessage)};
+
+                let peer = (self.node_addr)(to_id);
+                let pool = self.connections.clone();
+                tokio::task::spawn(async move {
+                    let mut client = pool.connection(peer).await;
+                    let request = tonic::Request::new(request.clone());
+                    client.conn.message(request).await.unwrap();
+                });
+            }
             PaxosMsg::ProposalForward(x) => {}
         }
     }

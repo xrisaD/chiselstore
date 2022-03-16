@@ -67,7 +67,7 @@ message TheMessage {
     uint64 to = 2;
     oneof message {
         ThePrepare prepare = 3;
-        Promise promise = 4;
+        ThePromise promise = 4;
         FirstAccept firstaccept = 5;
         DecideStopSign decidestopsign = 6;
         TheDecide decide = 7;
@@ -86,7 +86,7 @@ message ThePrepare {
     uint64 la = 4;
 }
 
-message Promise {
+message ThePromise {
     B n = 1;
     B n_accepted = 2;
     optional TheSyncItem syncitem = 3;
