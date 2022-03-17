@@ -199,6 +199,7 @@ impl<T: StoreTransport + Send + Sync> Cluster<StoreCommand> for Store<T> {
     }
 
     fn send_message(&mut self, to_id: usize, message: Message<StoreCommand>) {
+        println!("SEND MESSAGE");
         self.transport.send(to_id, message);
     }
 

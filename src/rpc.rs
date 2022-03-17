@@ -104,6 +104,7 @@ impl RpcTransport {
 #[async_trait]
 impl StoreTransport for RpcTransport {
     fn send(&self, to_id: usize, msg: Message<StoreCommand>) {
+        println!("SEND");
         match msg {
             Message::AppendEntryRequest {
                 from_id,
@@ -276,6 +277,7 @@ impl Rpc for RpcService {
             proto::Consistency::RelaxedReads => Consistency::RelaxedReads,
         };
         let server = self.server.clone();
+        println!("Execute");
         let results = match server.query(query.sql, consistency).await {
             Ok(results) => results,
             Err(e) => return Err(Status::internal(format!("{}", e))),
