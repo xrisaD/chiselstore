@@ -33,8 +33,15 @@ fn node_rpc_addr(id: u64) -> String {
     format!("http://{}:{}", host, port)
 }
 
+use log::LevelFilter;
+use log4rs::append::file::FileAppender;
+use log4rs::encode::pattern::PatternEncoder;
+use log4rs::config::{Appender, Config, Root};
+
+
 #[tokio::main]
 async fn main() -> Result<()> {
+
     // get arguments
     let opt = Opt::from_args();
 
@@ -42,9 +49,24 @@ async fn main() -> Result<()> {
     let id = opt.id as u64;
     let peers: Vec<u64> = opt.peers.into_iter().map(|x| x as u64).collect();
     
+    
+    let logfile = FileAppender::builder()
+    .encoder(Box::new(PatternEncoder::new("{l} - {m}\n")))
+    .build(format!("log/output{}.log",id))?;
+
+    let config = Config::builder()
+        .appender(Appender::builder().build("logfile", Box::new(logfile)))
+        .build(Root::builder()
+                .appender("logfile")
+                .build(LevelFilter::Info))?;
+
+    log4rs::init_config(config)?;
+
+
     // get host and port
     let (host, port) = node_authority(id);
     let rpc_listen_addr = format!("{}:{}", host, port).parse().unwrap();
+
     // create an RPC transport
     let transport = RpcTransport::new(Box::new(node_rpc_addr));
     // start server
@@ -54,9 +76,14 @@ async fn main() -> Result<()> {
     let f = {
         let server = server.clone();
         tokio::task::spawn_blocking( move || {
-            server.run();
+            server.run() 
         })
     };
+
+    // start thraids
+    let server = server.clone();
+    //server.start_threads().await;  
+
     // create RPC Service
     let rpc = RpcService::new(server);
     let g = tokio::task::spawn(async move {
@@ -68,6 +95,8 @@ async fn main() -> Result<()> {
         ret
     });
     let results = tokio::try_join!(f, g)?;
+
     results.1?;
     Ok(())
 }
+

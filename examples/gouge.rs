@@ -8,6 +8,7 @@ pub mod proto {
 use proto::rpc_client::RpcClient;
 use proto::{Consistency, Query};
 
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let stdin = tokio::io::stdin();
@@ -22,7 +23,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             sql: line.to_string(),
             consistency: Consistency::RelaxedReads as i32,
         });
+        println!("BEFORE EXECUTE");
         let response = client.execute(query).await?;
+        println!("AFTER EXECUTE");
         let response = response.into_inner();
         for row in response.rows {
             println!("{:?}", row.values);

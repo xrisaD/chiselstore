@@ -2,4 +2,5 @@ CREATE TABLE contacts ( contact_id INTEGER PRIMARY KEY, first_name TEXT NOT NULL
 
 CREATE TABLE idontknow (id INTEGER);
 INSERT INTO idontknow (id) VALUES (0);
+
 SELECT * FROM idontknow;

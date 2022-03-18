@@ -39,19 +39,27 @@ message Commands {
     repeated Command entries= 1;
 }
 
-message NoneOrPhantom {
-    string t = 1;
+enum RpcSnapshotTypeEnum {
+    COMPLETE = 0;
+    DELTA = 1;
 }
-message TheSnapshotType {
-    string t = 1;
+
+message RpcSnapshotType {
+    RpcSnapshotTypeEnum t = 1;
     map<uint64, string> s = 2;
 }
 
-message TheSyncItem {
+enum RpcSyncItemType {
+    PHANTOM = 0;
+    NONE = 1;
+    EMPTY = 2; // None Option<SyncItem>
+    
+}
+message RpcSyncItem {
     oneof v {
-        Commands storecommands = 1;
-        TheSnapshotType snapshottype = 2;
-        NoneOrPhantom noneorphantom = 3;
+        Commands storecommands = 1; // ENTRIES
+        RpcSnapshotType snapshottype = 2; // COMPLETE OR DELTA
+        RpcSyncItemType syncitemtype = 3; // NONE OR PHANTOM
     }
 }
 
@@ -59,85 +67,121 @@ message TheSyncItem {
 message StopSign {
     uint32 config_id = 1;
     repeated uint64 nodes = 2;
-    repeated int32 metadata = 3;
+    optional bytes metadata = 3;
 }
 
-message TheMessage {
+message RpcMessage {
     uint64 from = 1;
     uint64 to = 2;
     oneof message {
-        ThePrepare prepare = 3;
-        ThePromise promise = 4;
-        FirstAccept firstaccept = 5;
-        DecideStopSign decidestopsign = 6;
-        TheDecide decide = 7;
-        AcceptedStopSign acceptedstopsign = 8;
-        TheAccepted accepted = 9;
-        AcceptSync acceptsync = 10;
-        AcceptStopSign acceptstopsign = 11;
-        AcceptDecide acceptdecide = 12;
+        RpcPrepare rpcprepare = 3;
+        RpcPromise rpcpromise = 4;
+        RpcFirstAccept rpcfirstaccept = 5;
+        RpcDecideStopSign rpcdecidestopsign = 6;
+        RpcDecide rpcdecide = 7;
+        RpcAcceptedStopSign rpcacceptedstopsign = 8;
+        RpcAccepted rpcaccepted = 9;
+        RpcAcceptSync rpcacceptsync = 10;
+        RpcAcceptStopSign rpcacceptstopsign = 11;
+        RpcAcceptDecide rpcacceptdecide = 12;
+        RpcCompaction rpccompaction = 13;
+        RpcProposalForward rpcproposalforward = 14;
+        RpcPrepareReq rpcpreparereq = 15;
     }
 }
 
-message ThePrepare {
+message RpcPrepare {
     B n = 1;
     uint64 ld = 2;
     B n_accepted = 3;
     uint64 la = 4;
 }
 
-message ThePromise {
+message RpcPromise {
     B n = 1;
     B n_accepted = 2;
-    optional TheSyncItem syncitem = 3;
+    optional RpcSyncItem syncitem = 3;
     uint64 ld = 4;
     uint64 la = 5;
     optional StopSign stopsign = 6;
 }
 
-message FirstAccept {
+message RpcFirstAccept {
     B n = 1;
     repeated Command entries = 2;
 }
 
-message DecideStopSign {
+message RpcDecideStopSign {
     B n = 1;
 }
 
-message TheDecide {
+message RpcDecide {
     B n = 1;
     uint64 ld = 2;
 }
 
-message AcceptedStopSign {
+message RpcAcceptedStopSign {
     B n = 1;
 }
 
-message TheAccepted {
+message RpcAccepted {
     B n = 1;
     uint64 la = 2;
 }
 
-message AcceptSync {
+message RpcAcceptSync {
     B n = 1;
-    TheSyncItem sync_item = 2;
+    RpcSyncItem sync_item = 2;
     uint64 sync_idx= 3;
     optional uint64 decide_idx = 4;
     optional StopSign stopsign = 5;
 }
 
-message AcceptStopSign {
+message RpcAcceptStopSign {
     B n = 1;
     StopSign ss = 2;
 }
 
-message AcceptDecide {
+message RpcAcceptDecide {
     B n = 1;
     uint64 ld = 2;
     repeated Command entries = 3;
 }
 
+message RpcCompaction {
+    string s = 1;
+    optional uint64 v = 2;
+    bool itisforward = 3;
+}
+
+message RpcProposalForward{
+    repeated Command entries = 3;
+}
+
+message RpcPrepareReq {
+}
+
+message RpcHeartbeatRequest {
+    uint32 round = 1;
+}
+
+message RpcHeartbeatReply {
+    uint32 round = 1;
+    B ballot = 2;
+    bool majority_connected = 3;
+}
+
+message RpcBleMessage {
+    uint64 from = 1;
+    uint64 to = 2;
+    oneof message {
+        RpcHeartbeatRequest heartbeatrequest = 3;
+        RpcHeartbeatReply heartbeatreply = 4;
+    }
+}
+
 service RPC {
     rpc Execute(Query) returns (QueryResults);
-    rpc message(TheMessage) returns (Void);
+    rpc message(RpcMessage) returns (Void);
+    rpc ble_message(RpcBleMessage) returns (Void);
 }
