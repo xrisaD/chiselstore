@@ -303,7 +303,7 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
                 // f the decided index is > than the last executed command
                 if idx > self.last_executed_cmd {
                     // we should get the non executed commands after the last executed command
-                    
+
                 }
 
             }
