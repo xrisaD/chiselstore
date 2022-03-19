@@ -154,6 +154,10 @@ impl<T: StoreTransport + Send + Sync> Store<T> {
             _ => false,
         }
     }
+    
+    pub fn insert(&mut self, id: u64, results: Result<QueryResults, StoreError>) {
+        self.results.insert(id, results);
+    }
 
     pub fn get_connection(&mut self) -> Arc<Mutex<Connection>> {
         let idx = self.conn_idx % self.conn_pool.len();
@@ -257,21 +261,35 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     }
 
     pub fn run_commands(&self) {
-        // thread to get the decided sequence and run the commands
+        // thread to get the decided sequence and run the commands 
+        // TODO: should I run it for the leader??
         loop {
             let replica = self.replica.lock().unwrap();
-            // decided index
-            let idx = replica.get_decided_idx();
-            // f the decided index is > than the last executed command
-            if idx > self.last_executed_cmd {
-                // we should get the non executed commands after the last executed command
-                // that have been decided
-                
+            let commands = replica.read_decided_suffix(self.last_executed_cmd);
+            match commands {
+                Some(cmds) => {
+                    for cmd in cmds {
+                        // get the decided log entry
+                        if let omnipaxos_core::util::LogEntry::Decided(c) = cmd {
+                            // execute it
+                            let conn = self.store.lock().unwrap().get_connection();
+                            let results = query(conn, c.sql.clone());
+                            let mut store = self.store.lock().unwrap();
+                            // if the server is the leader store the result
+                            if store.is_leader() {
+                                store.insert(c.id , results);
+                            }
+                        }
+                    }
+                }
+                None => {
+                    // any command have not been decided 
+                }
             }
             std::thread::sleep(Duration::from_millis(1));
         }   
     }
-    
+
     pub fn run_leader_election(&self) {
         let mut replica = self.replica.lock().unwrap();
         let mut ble = self.ble.lock().unwrap();
