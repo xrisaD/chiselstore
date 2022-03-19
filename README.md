@@ -11,7 +11,7 @@ With ChiselStore, you get the benefits of easy-to-use, embeddable SQLite but wit
 
 For more information, check out the following [blog post](https://glaubercosta-11125.medium.com/winds-of-change-in-web-data-728187331f53).
 
-**At this repository Raft has been replaced by [OmniPaxos](https://github.com/haraldng/omnipaxos), a replicated log library implemented in Rust.**
+**At this repository, Raft has been replaced by [OmniPaxos](https://github.com/haraldng/omnipaxos), a replicated log library implemented in Rust.**
 ## Features
 
 * SQLite with Raft's high availability and fault tolerance
