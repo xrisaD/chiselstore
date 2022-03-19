@@ -215,7 +215,6 @@ pub struct QueryResults {
 
 const NOP_TRANSITION_ID: u64 = 0;
 const HEARTBEAT_TIMEOUT: u64 =  40;
-
 impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     /// Start a new server as part of a ChiselStore cluster.
     pub fn start(this_id: u64, peers: Vec<u64>, transport: T) -> Result<Self, StoreError> {
@@ -257,59 +256,60 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         })
     }
 
-    
-    /// Run the blocking event loop.
-    pub fn run(&self) {
+    pub fn run_commands(&self) {
+        // thread to get the decided sequence and run the commands
         loop {
+            let replica = self.replica.lock().unwrap();
+            // decided index
+            let idx = replica.get_decided_idx();
+            // f the decided index is > than the last executed command
+            if idx > self.last_executed_cmd {
+                // we should get the non executed commands after the last executed command
+                // that have been decided
+                
+            }
+            std::thread::sleep(Duration::from_millis(1));
+        }   
+    }
+    
+    pub fn run_leader_election(&self) {
+        let mut replica = self.replica.lock().unwrap();
+        let mut ble = self.ble.lock().unwrap();
+        if let Some(leader) = ble.tick() {
+            // a new leader is elected, pass it to SequencePaxos.
+            log::info!("TICK {}", leader.pid);
+            replica.handle_leader(leader);
+
+        } else {
+
+        }
+    }
+    pub fn get_messages(&self) {
+        loop {
+            let mut replica = self.replica.lock().unwrap();
             let store = self.store.lock().unwrap();
             let transport = store.transport.clone();
-            let mut replica = self.replica.lock().unwrap();
-            let mut ble = self.ble.lock().unwrap();
-
-            if let Some(leader) = ble.tick() {
-                // a new leader is elected, pass it to SequencePaxos.
-                log::info!("TICK {}", leader.pid);
-                replica.handle_leader(leader);
-
-            } else {
-
-            }
-
-            // Messages
             for out_msg in replica.get_outgoing_msgs() {
                 let receiver = out_msg.to;
                 // send out_msg to receiver on network layer
                 transport.send(receiver, out_msg);
             }
-        
-            
-            // BLE Messages
+            std::thread::sleep(Duration::from_millis(1));
+        }
+    }
+    pub fn get_ble_messages(&self) {
+        loop {
+            let mut ble = self.ble.lock().unwrap();
+            let store = self.store.lock().unwrap();
+            let transport = store.transport.clone();
             for out_msg in ble.get_outgoing_msgs() {
                 let receiver = out_msg.to;
                 // send out_msg to receiver on network layer
-                transport.send_ble(receiver, out_msg);
+                transport.send_ble(receiver, out_msg);      
             }
             std::thread::sleep(Duration::from_millis(1));
         }
     }
-
-    pub async fn start_threads(&'static self) {
-        // thread to get the decided sequence and run the commands
-        tokio::task::spawn(async move {
-            loop {
-                let replica = self.replica.lock().unwrap();
-                // decided index
-                let idx = replica.get_decided_idx();
-                // f the decided index is > than the last executed command
-                if idx > self.last_executed_cmd {
-                    // we should get the non executed commands after the last executed command
-
-                }
-
-            }
-        });
-    }
-
     
 
     /// Execute a SQL statement on the ChiselStore cluster.

@@ -49,7 +49,7 @@ async fn main() -> Result<()> {
     let id = opt.id as u64;
     let peers: Vec<u64> = opt.peers.into_iter().map(|x| x as u64).collect();
     
-    
+    // log messages
     let logfile = FileAppender::builder()
     .encoder(Box::new(PatternEncoder::new("{l} - {m}\n")))
     .build(format!("log/output{}.log",id))?;
@@ -73,16 +73,32 @@ async fn main() -> Result<()> {
     let server = StoreServer::start(id, peers, transport)?;
     
     let server = Arc::new(server);
-    let f = {
+    let f1 = {
         let server = server.clone();
-        tokio::task::spawn_blocking( move || {
-            server.run() 
+        tokio::task::spawn( async move {
+            server.run_commands();
+        })
+    };
+    let f2 = {
+        let server = server.clone();
+        tokio::task::spawn( async move {
+            server.run_leader_election();
         })
     };
 
-    // start thraids
-    let server = server.clone();
-    //server.start_threads().await;  
+    let f3 = {
+        let server = server.clone();
+        tokio::task::spawn( async move {
+            server.get_ble_messages();
+        })
+    };
+
+    let f4 = {
+        let server = server.clone();
+        tokio::task::spawn( async move {
+            server.get_messages();
+        })
+    };
 
     // create RPC Service
     let rpc = RpcService::new(server);
@@ -94,9 +110,9 @@ async fn main() -> Result<()> {
             .await;
         ret
     });
-    let results = tokio::try_join!(f, g)?;
+    let results = tokio::try_join!(f1, f2, f3, f4, g)?;
 
-    results.1?;
+    results.4?;
     Ok(())
 }
 
