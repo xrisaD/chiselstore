@@ -116,7 +116,10 @@ struct Store<T: StoreTransport + Send + Sync> {
     #[derivative(Debug = "ignore")]
     conn_pool: Vec<Arc<Mutex<Connection>>>,
     conn_idx: usize,
+    pending_transitions: Vec<StoreCommand>,
+    command_completions: HashMap<u64, Arc<Notify>>,
     results: HashMap<u64, Result<QueryResults, StoreError>>,
+    last_executed_cmd: u64
 }
 
 impl<T: StoreTransport + Send + Sync> Store<T> {
@@ -144,7 +147,10 @@ impl<T: StoreTransport + Send + Sync> Store<T> {
             transport: Arc::new(transport),
             conn_pool,
             conn_idx,
+            pending_transitions: Vec::new(),
+            command_completions: HashMap::new(),
             results: HashMap::new(),
+            last_executed_cmd : 0
         }
     }
 
@@ -194,7 +200,6 @@ pub struct StoreServer<T: StoreTransport + Send + Sync> {
     replica: Arc<Mutex<SequencePaxos<StoreCommand, KVSnapshot, MemoryStorage<StoreCommand, KVSnapshot>>>>,
     #[derivative(Debug = "ignore")]
     ble: Arc<Mutex<BallotLeaderElection>>,
-    last_executed_cmd: u64
 }
 
 /// Query row.
@@ -255,35 +260,37 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
             next_cmd_id: AtomicU64::new(1), // zero is reserved for no-op.
             store,
             replica,
-            ble,
-            last_executed_cmd : 0
+            ble
         })
     }
 
     pub fn run_commands(&self) {
         // thread to get the decided sequence and run the commands 
-        // TODO: should I run it for the leader??
         loop {
             let replica = self.replica.lock().unwrap();
-            let commands = replica.read_decided_suffix(self.last_executed_cmd);
+            let mut store = self.store.lock().unwrap();
+            let commands = replica.read_decided_suffix(store.last_executed_cmd);
             match commands {
                 Some(cmds) => {
                     for cmd in cmds {
+                        store.last_executed_cmd += 1;
                         // get the decided log entry
                         if let omnipaxos_core::util::LogEntry::Decided(c) = cmd {
                             // execute it
                             let conn = self.store.lock().unwrap().get_connection();
                             let results = query(conn, c.sql.clone());
                             let mut store = self.store.lock().unwrap();
-                            // if the server is the leader store the result
+                            // if the server is the leader
                             if store.is_leader() {
+                                // save the result
                                 store.insert(c.id , results);
+                                // notify that the result is ready
+                                // TODO
                             }
                         }
                     }
                 }
-                None => {
-                    // any command have not been decided 
+                None => { // any command have not been decided 
                 }
             }
             std::thread::sleep(Duration::from_millis(1));
@@ -373,33 +380,28 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
                         .await;
                 }
 
-                // if we are the leader
-                log::info!("STRONG 4");
-                // let (notify, id) = {
-                //     let mut store = self.store.lock().unwrap();
-                //     // we create a unique id for the command
-                //     let id = self.next_cmd_id.fetch_add(1, Ordering::SeqCst);
-                //     // we create the command
-                //     let cmd = StoreCommand {id: id as u64, sql: stmt.as_ref().to_string()};
-
-                //     let notify = Arc::new(Notify::new());
-                //     (notify, id)
-                // };
-
-                // we create a unique id for the command
-                let id = self.next_cmd_id.fetch_add(1, Ordering::SeqCst);
-                // we create the command
-                let cmd = StoreCommand {id: id as u64, sql: stmt.as_ref().to_string()};
                 
-
                 log::info!("STRONG 5");
-                // write command
-                self.replica.lock().unwrap().append(cmd).expect("Failed to append");
+                let (notify, id) = {
+                     // create a unique id for the command
+                    let id = self.next_cmd_id.fetch_add(1, Ordering::SeqCst);
+                    // create the command
+                    let cmd = StoreCommand {id: id as u64, sql: stmt.as_ref().to_string()};
+                    // write command
+                    self.replica.lock().unwrap().append(cmd).expect("Failed to append");
+
+                    // wait for a notification that the command has been decided
+                    let mut store = self.store.lock().unwrap();
+                    let notify = Arc::new(Notify::new());
+                    store.command_completions.insert(id, notify.clone());
+                    ( notify, id)
+                };
+                notify.notified().await;
+
                 log::info!("STRONG 6");
-                
-                let results = self.run_when_decided(stmt.as_ref().to_string()).await;
+                // if  the command has been the decided the results are written
+                let results = self.store.lock().unwrap().results.remove(&id).unwrap();
                 log::info!("STRONG 7");
-                //let results = self.store.lock().unwrap().results.remove(&id).unwrap();
                 log::info!("STRONG 8");
                 results?
             }

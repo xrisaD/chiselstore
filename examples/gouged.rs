@@ -4,7 +4,7 @@ use chiselstore::{
     rpc::{RpcService, RpcTransport},
     StoreServer,
 };
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 use structopt::StructOpt;
 use tonic::transport::Server;
 use std::time::Duration;
