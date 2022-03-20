@@ -8,7 +8,6 @@ use std::sync::Arc;
 use structopt::StructOpt;
 use tonic::transport::Server;
 
-
 #[derive(StructOpt, Debug)]
 #[structopt(name = "gouged")]
 struct Opt {
@@ -33,15 +32,17 @@ fn node_rpc_addr(id: usize) -> String {
     format!("http://{}:{}", host, port)
 }
 
-pub fn setup() {
+
+pub async fn setup() {
     // some setup code, like creating required files/directories, starting
     // servers, etc.
-
-    // start the servers
-
+    let x1 = start_server(1, vec![2, 3]).await;
+    let x2 = start_server(2, vec![1, 3]).await;
+    let x3 = start_server(3, vec![1, 2]).await;
 }
 
-async fn start_server(id: usize, peers: Vec<usize>, host: String, port: String) -> Result<()> {
+async fn start_server(id: usize, peers: Vec<usize>) -> Result<()> {
+    let (host, port) = node_authority(id);
     let rpc_listen_addr = format!("{}:{}", host, port).parse().unwrap();
     let transport = RpcTransport::new(Box::new(node_rpc_addr));
     let server = StoreServer::start(id, peers, transport)?;
