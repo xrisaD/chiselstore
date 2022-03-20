@@ -86,14 +86,14 @@ async fn main() -> Result<()> {
         })
     };
 
-    let f3 = {
-        let server = server.clone();
-        tokio::task::spawn( async move {
-            server.get_ble_messages();
-        })
-    };
+    // let f3 = {
+    //     let server = server.clone();
+    //     tokio::task::spawn( async move {
+    //         server.get_ble_messages();
+    //     })
+    // };
 
-    let f4 = {
+    let f3 = {
         let server = server.clone();
         tokio::task::spawn( async move {
             server.get_messages();
@@ -110,9 +110,9 @@ async fn main() -> Result<()> {
             .await;
         ret
     });
-    let results = tokio::try_join!(f1, f2, f3, f4, g)?;
+    let results = tokio::try_join!(f1, f2, f3, g)?;
 
-    results.4?;
+    results.3?;
     Ok(())
 }
 

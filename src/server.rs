@@ -267,74 +267,92 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     pub fn run_commands(&self) {
         // thread to get the decided sequence and run the commands 
         loop {
-            let replica = self.replica.lock().unwrap();
-            let mut store = self.store.lock().unwrap();
-            let commands = replica.read_decided_suffix(store.last_executed_cmd);
-            match commands {
-                Some(cmds) => {
-                    for cmd in cmds {
-                        store.last_executed_cmd += 1;
-                        // get the decided log entry
-                        if let omnipaxos_core::util::LogEntry::Decided(c) = cmd {
-                            // execute it
-                            let conn = self.store.lock().unwrap().get_connection();
-                            let results = query(conn, c.sql.clone());
-                            let mut store = self.store.lock().unwrap();
-                            // if the server is the leader
-                            if store.is_leader() {
-                                // save the result
-                                store.insert(c.id , results);
-                                // notify that the result is ready
-                                // TODO
+            {
+                let replica = self.replica.lock().unwrap();
+                let mut store = self.store.lock().unwrap();
+                let commands = replica.read_decided_suffix(store.last_executed_cmd);
+                match commands {
+                    Some(cmds) => {
+                        for cmd in cmds {
+                            store.last_executed_cmd += 1;
+                            // get the decided log entry
+                            if let omnipaxos_core::util::LogEntry::Decided(c) = cmd {
+                                log::info!("DECIDED COMMAND: {}", c.id);
+                                // execute it
+                                let conn = store.get_connection();
+                                let results = query(conn, c.sql.clone());
+                                log::info!("RESULTS COMMAND: {}", c.id);
+                                // if the server is the leader
+                                if store.is_leader() {
+                                    log::info!("I AM THE LEADER");
+                                    // save the result
+                                    store.insert(c.id , results);
+                                    // the command is completed so remove its notifier
+                                    if let Some(completion) = store.command_completions.remove(&(c.id)) {
+                                        // notify that it is completed
+                                        log::info!("NOTIFY THAT THE RESULT IS DONE");
+                                        completion.notify();
+                                    }
+                                }
                             }
                         }
                     }
-                }
-                None => { // any command have not been decided 
+                    None => { // any command have not been decided 
+                    }
                 }
             }
-            std::thread::sleep(Duration::from_millis(1));
+            std::thread::sleep(Duration::from_millis(2));
         }   
     }
 
     pub fn run_leader_election(&self) {
-        let mut replica = self.replica.lock().unwrap();
-        let mut ble = self.ble.lock().unwrap();
-        if let Some(leader) = ble.tick() {
-            // a new leader is elected, pass it to SequencePaxos.
-            log::info!("TICK {}", leader.pid);
-            replica.handle_leader(leader);
+        loop {
+            {
+                let mut ble = self.ble.lock().unwrap();
+                if let Some(leader) = ble.tick() {
+                    // a new leader is elected, pass it to SequencePaxos.
+                    log::info!("TICK {}", leader.pid);
+                    let mut replica = self.replica.lock().unwrap();
+                    replica.handle_leader(leader);
+                } else {
 
-        } else {
-
+                }
+            }
+            std::thread::sleep(Duration::from_millis(2));
         }
     }
     pub fn get_messages(&self) {
         loop {
-            let mut replica = self.replica.lock().unwrap();
-            let store = self.store.lock().unwrap();
-            let transport = store.transport.clone();
-            for out_msg in replica.get_outgoing_msgs() {
-                let receiver = out_msg.to;
-                // send out_msg to receiver on network layer
-                transport.send(receiver, out_msg);
+            {
+                let mut ble = self.ble.lock().unwrap();
+                let mut replica = self.replica.lock().unwrap();
+                let store = self.store.lock().unwrap();
+                let transport = store.transport.clone();
+
+                for out_msg in ble.get_outgoing_msgs() {
+                    let receiver = out_msg.to;
+                    // send out_msg to receiver on network layer
+                    transport.send_ble(receiver, out_msg);      
+                }
+
+                for out_msg in replica.get_outgoing_msgs() {
+                    let receiver = out_msg.to;
+                    // send out_msg to receiver on network layer
+                    transport.send(receiver, out_msg);
+                }
             }
             std::thread::sleep(Duration::from_millis(1));
         }
     }
-    pub fn get_ble_messages(&self) {
-        loop {
-            let mut ble = self.ble.lock().unwrap();
-            let store = self.store.lock().unwrap();
-            let transport = store.transport.clone();
-            for out_msg in ble.get_outgoing_msgs() {
-                let receiver = out_msg.to;
-                // send out_msg to receiver on network layer
-                transport.send_ble(receiver, out_msg);      
-            }
-            std::thread::sleep(Duration::from_millis(1));
-        }
-    }
+    // pub fn get_ble_messages(&self) {
+    //     loop {
+    //         let mut ble = self.ble.lock().unwrap();
+    //         let store = self.store.lock().unwrap();
+    //         let transport = store.transport.clone();
+           
+    //         std::thread::sleep(Duration::from_millis(1));
+    //     }
+    // }
     
 
     /// Execute a SQL statement on the ChiselStore cluster.
@@ -392,13 +410,16 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
 
                     // wait for a notification that the command has been decided
                     let mut store = self.store.lock().unwrap();
+                    // create a notify in order to be notified that the command has been executed
                     let notify = Arc::new(Notify::new());
                     store.command_completions.insert(id, notify.clone());
-                    ( notify, id)
+                    (notify, id)
                 };
+                log::info!("STRONG 6-0.5: WAIT FOR NOTIFICATION");
+                // wait to be notified that the result is ready
                 notify.notified().await;
 
-                log::info!("STRONG 6");
+                log::info!("STRONG 6: NOTIFICATION JUST CAME");
                 // if  the command has been the decided the results are written
                 let results = self.store.lock().unwrap().results.remove(&id).unwrap();
                 log::info!("STRONG 7");
@@ -422,11 +443,10 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     pub async fn wait_for_leader(&self) -> u64 {
         loop {
             let leader_id = self.replica.lock().unwrap().get_current_leader();
-
             if leader_id != 0 {
                 return leader_id;
             }
-            std::thread::sleep(Duration::from_millis(1));
+            std::thread::sleep(Duration::from_millis(2));
         }
     }
 
