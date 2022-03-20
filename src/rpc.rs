@@ -153,6 +153,7 @@ impl StoreTransport for RpcTransport {
             }
             PaxosMsg::Accepted(x) => {
                 log::info!("[SEND] ACCEPTED");
+                log::info!("[SEND] ACCEPTED: {} {} {} {}", x.n.n, x.n.priority, x.n.pid, x.la);
                 let ballot = Some(B{n: x.n.n, priority: x.n.priority, pid: x.n.pid});
                 let themessage = Rpcaccepted(RpcAccepted{n:ballot, la: x.la});
                 let request = RpcMessage {to, from, message: Some(themessage)};
@@ -251,7 +252,7 @@ impl StoreTransport for RpcTransport {
                 });
             }
             PaxosMsg::Decide(x) => {
-                log::info!("[SEND] ACCEPT DECIDE");
+                log::info!("[SEND] DECIDE");
                 let ballot = Some(B{n: x.n.n, priority: x.n.priority, pid: x.n.pid});
                 let themessage = Rpcdecide(RpcDecide{n:ballot, ld: x.ld});
                 let request = RpcMessage {to, from, message: Some(themessage)};
@@ -447,7 +448,7 @@ impl StoreTransport for RpcTransport {
         let to = msg.to;
         match msg.msg {
             HeartbeatMsg::Request(r) => {
-                log::info!("[BLE_SEND] FROM {} TO {}, BLE REQUEST: {}",from, to, r.round);
+                //log::info!("[BLE_SEND] FROM {} TO {}, BLE REQUEST: {}",from, to, r.round);
                 let themessage =  Heartbeatrequest(RpcHeartbeatRequest{round: r.round});
                 let request = RpcBleMessage {to, from, message: Some(themessage)};
 
@@ -461,7 +462,7 @@ impl StoreTransport for RpcTransport {
 
             }
             HeartbeatMsg::Reply(r) => {
-                log::info!("[BLE_SEND] FROM {} TO {}, BLE REPLY: Ballot: n: {} priority: {} pid: {}",from, to,  r.ballot.n, r.ballot.priority, r.ballot.pid);
+               // log::info!("[BLE_SEND] FROM {} TO {}, BLE REPLY: Ballot: n: {} priority: {} pid: {}",from, to,  r.ballot.n, r.ballot.priority, r.ballot.pid);
                 let ballot = Some(B{n: r.ballot.n, priority: r.ballot.priority, pid: r.ballot.pid});
                 let themessage = Heartbeatreply(RpcHeartbeatReply{round: r.round, ballot, majority_connected: r.majority_connected});
                 let request = RpcBleMessage {to, from, message: Some(themessage)};
@@ -827,11 +828,11 @@ impl Rpc for RpcService {
                         ss = Some(omnipaxos_core::storage::StopSign{config_id: s.config_id, nodes: s.nodes, metadata: s.metadata});
                     }
                     None => {
-                        is_ok = false;
                     }
                 }
  
                  if is_ok {
+                     log::info!("PROMISE IS_OK");
                      let themessage = PaxosMsg::Promise(Promise{n: ballot_n.unwrap(), n_accepted: ballot_n_accepted.unwrap(), sync_item: sync_item, ld: x.ld, la: x.la, stopsign: ss});
                      let msg = Message{
                          to,
@@ -841,7 +842,7 @@ impl Rpc for RpcService {
                      let server = self.server.clone();
                      server.handle(msg);
                  } else {
- 
+                    log::info!("PROMISE IS_NOT_OK");
                  }
             }
             Some(Rpcacceptsync(x)) => {
@@ -913,7 +914,6 @@ impl Rpc for RpcService {
                         ss = Some(omnipaxos_core::storage::StopSign{config_id: s.config_id, nodes: s.nodes, metadata: s.metadata});
                     }
                     None => {
-                        is_ok = false;
                     }
                 }
 
@@ -978,7 +978,7 @@ impl Rpc for RpcService {
 
         match msg.message {
             Some(Heartbeatreply(x)) => {  
-                log::info!("[BLE_MESSAGE] Reply");
+                //log::info!("[BLE_MESSAGE] Reply");
                 let mut isOk: bool =  true;
                 let mut ballot = None;
                 match x.ballot {
