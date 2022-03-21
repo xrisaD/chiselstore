@@ -73,32 +73,14 @@ async fn main() -> Result<()> {
     let server = StoreServer::start(id, peers, transport)?;
     
     let server = Arc::new(server);
-    let f1 = {
+
+    let f = {
         let server = server.clone();
         tokio::task::spawn( async move {
-            server.run_commands();
-        })
-    };
-    let f2 = {
-        let server = server.clone();
-        tokio::task::spawn( async move {
-            server.run_leader_election();
+            server.run();
         })
     };
 
-    // let f3 = {
-    //     let server = server.clone();
-    //     tokio::task::spawn( async move {
-    //         server.get_ble_messages();
-    //     })
-    // };
-
-    let f3 = {
-        let server = server.clone();
-        tokio::task::spawn( async move {
-            server.get_messages();
-        })
-    };
 
     // create RPC Service
     let rpc = RpcService::new(server);
@@ -110,9 +92,9 @@ async fn main() -> Result<()> {
             .await;
         ret
     });
-    let results = tokio::try_join!(f1, f2, f3, g)?;
+    let results = tokio::try_join!(f, g)?;
 
-    results.3?;
+    results.1?;
     Ok(())
 }
 

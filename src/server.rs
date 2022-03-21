@@ -16,14 +16,46 @@ use slog::{debug, info, trace, warn, Logger};
 // CHANGE:
 use tokio::sync::mpsc;
 
-use omnipaxos_core::ballot_leader_election::{BLEConfig, BallotLeaderElection};
+use omnipaxos_core::ballot_leader_election::{BLEConfig, BallotLeaderElection, Ballot};
 use omnipaxos_core::ballot_leader_election::messages::BLEMessage;
-// use std::sync::mpsc::Sender;
 use omnipaxos_core::{
     messages::Message,
     sequence_paxos::{CompactionErr, ReconfigurationRequest, SequencePaxos, SequencePaxosConfig},
-    storage::{memory_storage::MemoryStorage, Snapshot},
+    storage::{Storage, Snapshot, StopSignEntry}
 };
+
+// Used for handling async queries
+// #[derive(Clone, Debug)]
+#[derive(Debug)]
+pub struct QueryResultsHolder {
+    query_completion_notifiers: HashMap<u64, Arc<Notify>>,
+    results: HashMap<u64, Result<QueryResults, StoreError>>,
+}
+
+impl QueryResultsHolder {
+    pub fn insert_notifier(&mut self, id: u64, notifier: Arc<Notify>) {
+        self.query_completion_notifiers.insert(id, notifier);
+    }
+
+    pub fn push_result(&mut self, id: u64, result: Result<QueryResults, StoreError>) {
+        if let Some(completion) = self.query_completion_notifiers.remove(&(id as u64)) {
+            self.results.insert(id as u64, result);
+            completion.notify();
+        }
+    }
+
+    pub fn remove_result(&mut self, id: &u64) -> Option<Result<QueryResults, StoreError>> {
+        self.results.remove(id)
+    }
+    
+    fn default() -> Self {
+        Self {
+            query_completion_notifiers: HashMap::new(),
+            results: HashMap::new(),
+        }
+    }
+}
+
 
 /// ChiselStore transport layer.
 ///
@@ -35,14 +67,6 @@ pub trait StoreTransport {
     fn send(&self, to_id: u64, msg: Message<StoreCommand, KVSnapshot>);
 
     fn send_ble(&self, to_id: u64, msg: BLEMessage);
-
-    /// Delegate command to another node.
-    async fn delegate(
-        &self,
-        to_id: u64,
-        sql: String,
-        consistency: Consistency,
-    ) -> Result<QueryResults, StoreError>;
 }
 
 /// Consistency mode.
@@ -100,30 +124,49 @@ impl Snapshot<StoreCommand> for KVSnapshot {
 struct StoreConfig {
     /// Connection pool size.
     conn_pool_size: usize,
+    query_results_holder: Arc<Mutex<QueryResultsHolder>>,
 }
 
 #[derive(Derivative)]
 #[derivative(Debug)]
-struct Store<T: StoreTransport + Send + Sync> {
+struct Store {
+    /// Vector which contains all the replicated entries in-memory.
+    log: Vec<StoreCommand>,
+    /// Last promised round.
+    n_prom: Ballot,
+    /// Last accepted round.
+    acc_round: Ballot,
+    /// Length of the decided log.
+    ld: u64,
+
+    // TMP snapshots impl
+
+    /// Garbage collected index.
+    trimmed_idx: u64,
+    /// Stored snapshot
+    snapshot: Option<KVSnapshot>,
+    /// Stored StopSign
+    stopsign: Option<omnipaxos_core::storage::StopSignEntry>,
+
+
     /// ID of the node this Cluster objecti s on.
     this_id: u64,
     /// Is this node the leader?
     leader: Option<u64>,
     leader_exists: AtomicBool,
-    waiters: Vec<Arc<Notify>>,
-    /// Transport layer.
-    transport: Arc<T>,
+
+    
     #[derivative(Debug = "ignore")]
     conn_pool: Vec<Arc<Mutex<Connection>>>,
     conn_idx: usize,
+
     pending_transitions: Vec<StoreCommand>,
-    command_completions: HashMap<u64, Arc<Notify>>,
-    results: HashMap<u64, Result<QueryResults, StoreError>>,
-    last_executed_cmd: u64
+    query_results_holder: Arc<Mutex<QueryResultsHolder>>,
 }
 
-impl<T: StoreTransport + Send + Sync> Store<T> {
-    pub fn new(this_id: u64, transport: T, config: StoreConfig) -> Self {
+
+impl Store {
+    pub fn new(this_id: u64, config: StoreConfig) -> Self {
         let mut conn_pool = vec![];
         let conn_pool_size = config.conn_pool_size;
         for _ in 0..conn_pool_size {
@@ -143,27 +186,23 @@ impl<T: StoreTransport + Send + Sync> Store<T> {
             this_id,
             leader: None,
             leader_exists: AtomicBool::new(false),
-            waiters: Vec::new(),
-            transport: Arc::new(transport),
+
+            log: Vec::new(),
+            n_prom: Ballot::default(),
+            acc_round: Ballot::default(),
+            ld: 0,
+
+            trimmed_idx: 0,
+            snapshot: None,
+            stopsign: None,
+
             conn_pool,
             conn_idx,
             pending_transitions: Vec::new(),
-            command_completions: HashMap::new(),
-            results: HashMap::new(),
-            last_executed_cmd : 0
-        }
-    }
-
-    pub fn is_leader(&self) -> bool {
-        match self.leader {
-            Some(id) => id == self.this_id,
-            _ => false,
+            query_results_holder: config.query_results_holder,
         }
     }
     
-    pub fn insert(&mut self, id: u64, results: Result<QueryResults, StoreError>) {
-        self.results.insert(id, results);
-    }
 
     pub fn get_connection(&mut self) -> Arc<Mutex<Connection>> {
         let idx = self.conn_idx % self.conn_pool.len();
@@ -195,11 +234,112 @@ fn query(conn: Arc<Mutex<Connection>>, sql: String) -> Result<QueryResults, Stor
 #[derivative(Debug)]
 pub struct StoreServer<T: StoreTransport + Send + Sync> {
     next_cmd_id: AtomicU64,
-    store: Arc<Mutex<Store<T>>>,
     #[derivative(Debug = "ignore")]
-    replica: Arc<Mutex<SequencePaxos<StoreCommand, KVSnapshot, MemoryStorage<StoreCommand, KVSnapshot>>>>,
+    replica: Arc<Mutex<SequencePaxos<StoreCommand, KVSnapshot, Store>>>,
     #[derivative(Debug = "ignore")]
     ble: Arc<Mutex<BallotLeaderElection>>,
+    /// Transport layer.
+    transport: Arc<T>,
+    query_results_holder: Arc<Mutex<QueryResultsHolder>>,
+    store:  Arc<Mutex<Store>>
+}
+
+impl Storage<StoreCommand, KVSnapshot> for Store
+{
+    fn append_entry(&mut self, entry: StoreCommand) -> u64 {
+        self.log.push(entry);
+        self.get_log_len()
+    }
+
+    fn append_entries(&mut self, entries: Vec<StoreCommand>) -> u64 {
+        let mut e = entries;
+        self.log.append(&mut e);
+        self.get_log_len()
+    }
+
+    fn append_on_prefix(&mut self, from_idx: u64, entries: Vec<StoreCommand>) -> u64 {
+        self.log.truncate(from_idx as usize);
+        self.append_entries(entries)
+    }
+
+    fn set_promise(&mut self, n_prom: Ballot) {
+        self.n_prom = n_prom;
+    }
+
+    fn set_decided_idx(&mut self, ld: u64) {
+        // run queries
+        let queries_to_run = self.log[(self.ld as usize)..(ld as usize)].to_vec();
+        //let conn = self.get_connection();
+        for q in queries_to_run.iter() {
+            let conn = self.get_connection();
+            let results = query(conn, q.sql.clone());
+
+            let mut query_results_holder = self.query_results_holder.lock().unwrap();
+            query_results_holder.push_result(q.id, results);
+        }
+
+        self.ld = ld;
+    }
+
+    fn get_decided_idx(&self) -> u64 {
+        self.ld
+    }
+
+    fn set_accepted_round(&mut self, na: Ballot) {
+        self.acc_round = na;
+    }
+
+    fn get_accepted_round(&self) -> Ballot {
+        self.acc_round
+    }
+
+    fn get_entries(&self, from: u64, to: u64) -> &[StoreCommand] {
+        self.log.get(from as usize..to as usize).unwrap_or(&[])
+    }
+
+    fn get_log_len(&self) -> u64 {
+        self.log.len() as u64
+    }
+
+    fn get_suffix(&self, from: u64) -> &[StoreCommand] {
+        match self.log.get(from as usize..) {
+            Some(s) => s,
+            None => &[],
+        }
+    }
+
+    fn get_promise(&self) -> Ballot {
+        self.n_prom
+    }
+
+    // TEMP Snapshots impl
+    fn set_stopsign(&mut self, s: StopSignEntry) {
+        self.stopsign = Some(s);
+    }
+
+    fn get_stopsign(&self) -> Option<StopSignEntry> {
+        self.stopsign.clone()
+    }
+
+    fn trim(&mut self, trimmed_idx: u64) {
+        self.log.drain(0..trimmed_idx as usize);
+    }
+
+    fn set_compacted_idx(&mut self, trimmed_idx: u64) {
+        self.trimmed_idx = trimmed_idx;
+    }
+
+    fn get_compacted_idx(&self) -> u64 {
+        self.trimmed_idx
+    }
+
+    fn set_snapshot(&mut self, snapshot: KVSnapshot) {
+        self.snapshot = Some(snapshot);
+    }
+
+    fn get_snapshot(&self) -> Option<KVSnapshot> {
+        self.snapshot.clone()
+    }
 }
 
 /// Query row.
@@ -229,8 +369,10 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     pub fn start(this_id: u64, peers: Vec<u64>, transport: T) -> Result<Self, StoreError> {
         log::info!("Start {} !", this_id);
         // create a store
-        let config = StoreConfig { conn_pool_size: 20 };
-        let store = Arc::new(Mutex::new(Store::new(this_id, transport, config)));
+        let query_results_holder = Arc::new(Mutex::new(QueryResultsHolder::default()));
+        let config = StoreConfig { conn_pool_size: 20, query_results_holder: query_results_holder.clone() };
+        let store = Store::new(this_id, config);
+        //let store = Arc::new(Mutex::new(store1));
         let noop = StoreCommand {
             id: NOP_TRANSITION_ID,
             sql: "".to_string(),
@@ -242,12 +384,9 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         sp_config.set_pid(this_id);
         sp_config.set_peers(peers.clone());
 
-
-        let storage = MemoryStorage::<StoreCommand, KVSnapshot>::default();
-        let replica = SequencePaxos::with(sp_config, storage);
-
+        let replica = SequencePaxos::with(sp_config, store);
         let replica = Arc::new(Mutex::new(replica));
-
+        
         let mut ble_config = BLEConfig::default();
         ble_config.set_pid(this_id);
         ble_config.set_peers(peers);
@@ -258,97 +397,25 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         
         Ok(StoreServer {
             next_cmd_id: AtomicU64::new(1), // zero is reserved for no-op.
-            store,
             replica,
-            ble
+            ble,
+            transport: Arc::new(transport),
+            query_results_holder,
+            store: Arc::new(Mutex::new(store.clone()))
         })
     }
-
-    pub fn run_commands(&self) {
-        // thread to get the decided sequence and run the commands 
-        loop {
-            {
-                let replica = self.replica.lock().unwrap();
-                let mut store = self.store.lock().unwrap();
-                // let command = replica.read(1);
-                // log::info!("READ COMMAND");
-            //     match command {
-            //         Some(cmd) => {
-            //             log::info!("GET DECIDED COMMANDS: SOME SOME SOME");
-            //         }
-            //         None => {}
-            //     }
-            // }
-                let commands = replica.read_decided_suffix(store.last_executed_cmd);
-               // log::info!("GET DECIDED COMMANDS");
-                match commands {
-                    Some(cmds) => {
-                        log::info!("GET DECIDED COMMANDS: SOME");
-                        for cmd in cmds {
-                            log::info!("DECIDED CMD");
-                            store.last_executed_cmd += 1;
-                            // get the decided log entry
-                            if let omnipaxos_core::util::LogEntry::Decided(c) = cmd {
-                                log::info!("DECIDED COMMAND: {}", c.id);
-                                // execute it
-                                let conn = store.get_connection();
-                                let results = query(conn, c.sql.clone());
-                                log::info!("RESULTS COMMAND: {}", c.id);
-                                // if the server is the leader
-                                if store.is_leader() {
-                                    log::info!("I AM THE LEADER");
-                                    // save the result
-                                    store.insert(c.id , results);
-                                    // the command is completed so remove its notifier
-                                    match store.command_completions.remove(&(c.id)) {
-                                        Some(completion) => {
-                                            log::info!("NOTIFY THAT THE RESULT IS DONE");
-                                            completion.notify();
-                                        }
-                                        None => {
-                                            log::info!("NOTIFYYYYYY nOT");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    None => { // any command have not been decided 
-                    }
-                }
-            }
-            std::thread::sleep(Duration::from_millis(2));
-        } 
-    }
-
-    pub fn run_leader_election(&self) {
-        // loop {
-        //     {
-        //         let mut ble = self.ble.lock().unwrap();
-        //         if let Some(leader) = ble.tick() {
-        //             // a new leader is elected, pass it to SequencePaxos.
-        //             log::info!("TICK {}", leader.pid);
-        //             let mut replica = self.replica.lock().unwrap();
-        //             replica.handle_leader(leader);
-        //         } else {
-
-        //         }
-        //     }
-        //     std::thread::sleep(Duration::from_millis(1));
-        // }
-    }
-    pub fn get_messages(&self) {
+    
+    pub fn run(&self) {
         loop {
                 let mut ble = self.ble.lock().unwrap();
                 let mut replica = self.replica.lock().unwrap();
-                let mut store = self.store.lock().unwrap();
+                //let mut store = self.store.lock().unwrap();
                 if let Some(leader) = ble.tick() {
                     // a new leader is elected, pass it to SequencePaxos.
-                    log::info!("TICK {}", leader.pid);
                     replica.handle_leader(leader);
-                    store.leader = Some(leader.pid);
+                    //store.leader = Some(leader.pid);
                 }
-                let transport = store.transport.clone();
+                let transport = self.transport.clone();
 
                 for out_msg in ble.get_outgoing_msgs() {
                     let receiver = out_msg.to;
@@ -373,7 +440,7 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         stmt: S,
         consistency: Consistency,
     ) -> Result<QueryResults, StoreError> {
-        // If the statement is a read statement, let's use whatever
+         // If the statement is a read statement, let's use whatever
         // consistency the user provided; otherwise fall back to strong
         // consistency.
         let consistency = if is_read_statement(stmt.as_ref()) {
@@ -381,96 +448,45 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         } else {
             Consistency::Strong
         };
-        log::info!("START QUERY 2");
         let results = match consistency {
-            Consistency::Strong => {
-                log::info!("STRONG 1");
-                // wait for the leader
-                let leader_id = self.wait_for_leader().await;
-                
-                log::info!("STRONG 2  {}", leader_id);
-                
-                // when we have the leader
-                // we check if we are not the leader or not 
-                let (delegate, transport) = {
-                    let store = self.store.lock().unwrap();
-                    let delegate = !(store.this_id == leader_id);
-                    (delegate, store.transport.clone())
-                };
-
-                log::info!("STRONG 3");
-                // if we are not the leader we will delegate it to the leader
-                if delegate {
-                    log::info!("STRONG 33   ");
-                    // when delegate wait for the result
-                    // the leader will send us the result
-                    return transport
-                        .delegate(leader_id, stmt.as_ref().to_string(), consistency)
-                        .await;
-                }
-
-                
-                log::info!("STRONG 5");
+                Consistency::Strong => {
+                log::info!("before notify");
                 let (notify, id) = {
-                     // create a unique id for the command
                     let id = self.next_cmd_id.fetch_add(1, Ordering::SeqCst);
-                    // create the command
-                    let cmd = StoreCommand {id: id as u64, sql: stmt.as_ref().to_string()};
-                    // write command
-                    self.replica.lock().unwrap().append(cmd).expect("Failed to append");
-
-                    // wait for a notification that the command has been decided
-                    let mut store = self.store.lock().unwrap();
-                    // create a notify in order to be notified that the command has been executed
+                    let cmd = StoreCommand {
+                        id: id,
+                        sql: stmt.as_ref().to_string(),
+                    };
+                    
                     let notify = Arc::new(Notify::new());
-                    store.command_completions.insert(id, notify.clone());
+
+                    let mut query_results_holder = self.query_results_holder.lock().unwrap();
+                    query_results_holder.insert_notifier(id, notify.clone());
+                    
+                    let mut replica = self.replica.lock().unwrap();
+                    replica.append(cmd).expect("Failed to append");
+                    log::info!("end of notify");
                     (notify, id)
                 };
-                log::info!("STRONG 6-0.5: WAIT FOR NOTIFICATION");
-                // wait to be notified that the result is ready
-                
+                log::info!("wait for notify");
+                // wait for append (and decide) to finish in background
                 notify.notified().await;
-                
-                log::info!("STRONG 6: NOTIFICATION JUST CAME");
-                // if  the command has been the decided the results are written
-                let results = self.store.lock().unwrap().results.remove(&id).unwrap();
-                log::info!("STRONG 7");
-                log::info!("STRONG 8");
+                log::info!("notify came");
+                let results = self.query_results_holder.lock().unwrap().remove_result(&id).unwrap();
+                // TODO: RETURN AN ERROR IF THIS IS AN
+                log::info!("results notify");
                 results?
-            }
-            Consistency::RelaxedReads => {
-                log::info!("RELAXED READS");
+            } Consistency::RelaxedReads => {
                 let conn = {
                     let mut store = self.store.lock().unwrap();
                     store.get_connection()
                 };
-                log::info!("RELAXED READS QUERY"); 
                 query(conn, stmt.as_ref().to_string())?
             }
-        };
+        };  
+        log::info!("END notify");
         Ok(results)
     }
-
-    /// Wait for a leader to be elected.
-    pub async fn wait_for_leader(&self) -> u64 {
-        loop {
-            let leader_id = self.replica.lock().unwrap().get_current_leader();
-            if leader_id != 0 {
-                log::info!("GOT CURRENT LEADER!!");
-                return leader_id;
-            }
-            std::thread::sleep(Duration::from_millis(1));
-        }
-    }
-
-    // pub async fn run_when_decided(&self, stm: String) -> Result<QueryResults, StoreError> {
-    //     let _entries = self.replica.lock().unwrap().read(10);
-    //     let conn = {
-    //         let mut store = self.store.lock().unwrap();
-    //         store.get_connection()
-    //     };
-    //     return query(conn,stm);
-    // }
 
     pub fn handle(&self, msg: Message<StoreCommand, KVSnapshot>) {
         self.replica.lock().unwrap().handle(msg);

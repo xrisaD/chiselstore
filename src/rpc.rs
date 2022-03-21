@@ -478,26 +478,26 @@ impl StoreTransport for RpcTransport {
         }
     }
 
-    async fn delegate(
-        &self,
-        to_id: u64,
-        sql: String,
-        consistency: Consistency,
-    ) -> Result<crate::server::QueryResults, crate::StoreError> {
-        let addr = (self.node_addr)(to_id);
-        let mut client = self.connections.connection(addr.clone()).await;
-        let query = tonic::Request::new(Query {
-            sql,
-            consistency: consistency as i32,
-        });
-        let response = client.conn.execute(query).await.unwrap();
-        let response = response.into_inner();
-        let mut rows = vec![];
-        for row in response.rows {
-            rows.push(crate::server::QueryRow { values: row.values });
-        }
-        Ok(crate::server::QueryResults { rows })
-    }
+    // async fn delegate(
+    //     &self,
+    //     to_id: u64,
+    //     sql: String,
+    //     consistency: Consistency,
+    // ) -> Result<crate::server::QueryResults, crate::StoreError> {
+    //     let addr = (self.node_addr)(to_id);
+    //     let mut client = self.connections.connection(addr.clone()).await;
+    //     let query = tonic::Request::new(Query {
+    //         sql,
+    //         consistency: consistency as i32,
+    //     });
+    //     let response = client.conn.execute(query).await.unwrap();
+    //     let response = response.into_inner();
+    //     let mut rows = vec![];
+    //     for row in response.rows {
+    //         rows.push(crate::server::QueryRow { values: row.values });
+    //     }
+    //     Ok(crate::server::QueryResults { rows })
+    // }
 }
 
 /// RPC service.
