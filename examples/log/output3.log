@@ -4,46 +4,125 @@ INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:1
 INFO - TICK 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:2
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:2
+INFO - TICK 3
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PREPARE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:3
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:3
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - PROMISE IS_OK
 INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 1
+INFO - [SEND] ACCEPT SYNC
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:4
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:4
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 0 0 2 0
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:5
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:5
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:6
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:6
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:7
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:7
+INFO - START QUERY 2
+INFO - STRONG 1
+INFO - GOT CURRENT LEADER!!
+INFO - STRONG 2  3
+INFO - STRONG 3
+INFO - STRONG 5
+INFO - STRONG 6-0.5: WAIT FOR NOTIFICATION
 INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 1 0 1 0
+INFO - [SEND] ACCEPT DECIDE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] ACCEPT DECIDE
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:8
+INFO - GET DECIDED COMMANDS: SOME
+INFO - DECIDED CMD
+INFO - DECIDED COMMAND: 1
+INFO - INSIDE QUERY 1
+INFO - RESULTS COMMAND: 1
+INFO - I AM THE LEADER
+INFO - NOTIFY THAT THE RESULT IS DONE
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:8
+INFO - TICK 3
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:9
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:9
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:10
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:10
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:11
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:11
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:12
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:12
+INFO - TICK 0
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:13
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:13
+INFO - TICK 3
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:14
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:14
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:15
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:15
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:16
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:16
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:17
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:17
+INFO - Start 3 !
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:1
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:1
+INFO - TICK 0
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:2
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:2
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PROMISE
+INFO - TICK 3
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:3
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:3
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:4
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:4
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:5
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:5
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:6
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:6
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:7
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:7
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:8
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:8
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 2
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:9
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:9
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 2 0 2 0
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:10
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:10
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 3 0 1 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:11
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:11
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:12
@@ -64,46 +143,20 @@ INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:19
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:19
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:20
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:20
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 2
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:21
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:21
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 4 0 2 0
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:22
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:22
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 5 0 1 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:23
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:23
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:24
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:24
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:25
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 6 0 2 0
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:25
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:26
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:26
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 6 0 2 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:27
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:27
-INFO - GET DECIDED COMMANDS: SOME
-INFO - DECIDED CMD
-INFO - DECIDED COMMAND: 1
-INFO - INSIDE QUERY 1
-INFO - INSIDE QUERY 2
-INFO - RESULTS COMMAND: 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:28
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:28
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:29
@@ -116,111 +169,80 @@ INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:32
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:32
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:33
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:33
+INFO - START QUERY 2
+INFO - STRONG 1
+INFO - GOT CURRENT LEADER!!
+INFO - STRONG 2  3
+INFO - STRONG 3
+INFO - STRONG 5
+INFO - STRONG 6-0.5: WAIT FOR NOTIFICATION
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] ACCEPT DECIDE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] ACCEPT DECIDE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:34
+INFO - GET DECIDED COMMANDS: SOME
+INFO - DECIDED CMD
+INFO - DECIDED COMMAND: 1
+INFO - INSIDE QUERY 1
+INFO - INSIDE QUERY 2
+INFO - RESULTS COMMAND: 1
+INFO - I AM THE LEADER
+INFO - NOTIFY THAT THE RESULT IS DONE
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] DECIDE
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:34
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:35
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:35
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:36
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:36
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:37
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:37
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 7 0 1 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:38
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:38
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:39
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:39
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:40
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:40
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 8 0 2 1
-INFO - TICK 2
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:41
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:41
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:42
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:42
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 9 0 1 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:43
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:43
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:44
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:44
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 2
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:45
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:45
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 10 0 2 1
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:46
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:46
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 11 0 1 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:47
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:47
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:48
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:48
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 2
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:49
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:49
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 12 0 2 1
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:50
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:50
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:51
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:51
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 13 0 1 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:52
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:52
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:53
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:53
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:54
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:54
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:55
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:55
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 14 0 2 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:56
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:56
-INFO - TICK 2
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:57
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:57
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:58
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:58
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:59
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 15 0 1 1
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:59
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:60
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:60
@@ -234,36 +256,18 @@ INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:64
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:64
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:65
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:65
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 2
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:66
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:66
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 16 0 2 1
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:67
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:67
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:68
-INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 17 0 1 1
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:68
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:69
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:69
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:70
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:70
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 2
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:71
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:71
-INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 18 0 2 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:72
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:72
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:73
@@ -272,3 +276,1207 @@ INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:74
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:74
 INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:75
 INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:75
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:76
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:76
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:77
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:77
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:78
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:78
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:79
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:79
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:80
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:80
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:81
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:81
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:82
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:82
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:83
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:83
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:84
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:84
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:85
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:85
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:86
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:86
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PROMISE
+INFO - TICK 2
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:87
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:87
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 1 0 2 1
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:88
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:88
+INFO - TICK 3
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:89
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:89
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:90
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:90
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:91
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:91
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:92
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:92
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PROMISE
+INFO - TICK 2
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:93
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:93
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 3 0 2 1
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:94
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:94
+INFO - TICK 3
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:95
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:95
+INFO - PROMISE IS_OK
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:96
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:96
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:97
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:97
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:98
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:98
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] PROMISE
+INFO - TICK 3
+INFO - [SEND] FROM 3 TO 1, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [SEND] FROM 3 TO 2, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:99
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:99
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:100
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:100
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:101
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:101
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:102
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:102
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:103
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:103
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:104
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:104
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:105
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:105
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:106
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:106
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:107
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:107
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:108
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:108
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:109
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:109
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:110
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:110
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:111
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:111
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:112
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:112
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:113
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:113
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:114
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:114
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:115
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:115
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:116
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:116
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:117
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:118
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:117
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:118
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:119
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:119
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:120
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:120
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:121
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:121
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:122
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:122
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:123
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:123
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:124
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:124
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:125
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:125
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:126
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:126
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:127
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:127
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:128
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:128
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:129
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:129
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:130
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:130
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:131
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:131
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:132
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:132
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:133
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:133
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:134
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:134
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:135
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:135
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:136
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:136
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:137
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:137
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:138
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:138
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:139
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:139
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:140
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:140
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:141
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:141
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:142
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:142
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:143
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:143
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:144
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:144
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:145
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:145
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:146
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:146
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:147
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:147
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:148
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:148
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:149
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:149
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:150
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:151
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:150
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:151
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:152
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:152
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:153
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:153
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:154
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:154
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:155
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:155
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:156
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:156
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:157
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:157
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:158
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:158
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:159
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:159
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:160
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:160
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:161
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:161
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:162
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:162
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:163
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:163
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:164
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:164
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:165
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:165
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:166
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:166
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:167
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:167
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:168
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:168
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:169
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:169
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:170
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:170
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:171
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:171
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:172
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:172
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:173
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:173
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:174
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:174
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:175
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:175
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:176
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:176
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:177
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:177
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:178
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:178
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:179
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:179
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:180
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:180
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:181
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:181
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:182
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:182
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:183
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:183
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:184
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:184
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:185
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:186
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:185
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:186
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:187
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:187
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:188
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:188
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:189
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:189
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:190
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:190
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:191
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:191
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:192
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:192
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:193
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:193
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:194
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:194
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:195
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:195
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:196
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:196
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:197
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:197
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:198
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:198
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:199
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:199
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:200
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:200
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:201
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:201
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:202
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:202
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:203
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:203
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:204
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:204
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:205
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:205
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:206
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:206
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:207
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:207
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:208
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:209
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:208
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:209
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:210
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:210
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:211
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:212
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:211
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:212
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:213
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:213
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:214
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:215
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:214
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:215
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:217
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:216
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:216
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:217
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:218
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:219
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:218
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:219
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:220
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:220
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:221
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:222
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:221
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:222
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:223
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:223
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:224
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:224
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:225
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:225
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:226
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:226
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:227
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:227
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:228
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:228
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:229
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:229
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:230
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:230
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:231
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:231
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:232
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:232
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:233
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:233
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:234
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:234
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:235
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:235
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:236
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:236
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:237
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:237
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:238
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:238
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:239
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:239
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:240
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:240
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:241
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:241
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:242
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:242
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:243
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:243
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:244
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:244
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:245
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:245
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:246
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:246
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:247
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:247
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:248
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:248
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:249
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:249
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:250
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:250
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:251
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:251
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:252
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:252
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:253
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:253
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:254
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:254
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:255
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:255
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:256
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:256
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:257
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:257
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:258
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:258
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:259
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:259
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:260
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:260
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:261
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:261
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:262
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:262
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:263
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:263
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:264
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:264
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:265
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:265
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:266
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:266
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:267
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:267
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:268
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:268
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:269
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:269
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:270
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:271
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:270
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:271
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:272
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:272
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:273
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:273
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:274
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:274
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:275
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:275
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:276
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:277
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:276
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:277
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:278
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:278
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:279
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:279
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:280
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:280
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:281
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:281
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:282
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:282
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:283
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:283
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:284
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:284
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:285
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:285
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:286
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:286
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:287
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:287
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:288
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:288
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:289
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:289
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:290
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:290
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:291
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:291
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:292
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:292
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:293
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:293
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:294
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:294
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:295
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:295
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:296
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:296
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:297
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:297
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:298
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:298
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:299
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:299
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:300
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:300
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:301
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:301
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:302
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:302
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:303
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:303
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:304
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:304
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:305
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:305
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:306
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:306
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:307
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:307
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:308
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:308
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:309
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:309
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:310
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:310
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:311
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:311
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:312
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:312
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:313
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:313
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:314
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:315
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:314
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:315
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:316
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:316
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:317
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:317
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:318
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:318
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:319
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:319
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:320
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:320
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:321
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:321
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:322
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:322
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:323
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:323
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:324
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:324
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:325
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:325
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:326
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:326
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:327
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:327
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:328
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:328
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:329
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:329
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:330
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:330
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:331
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:331
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:332
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:332
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:333
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:333
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:334
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:334
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:335
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:335
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:336
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:336
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:337
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:337
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:338
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:338
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:339
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:339
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:340
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:340
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:341
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:341
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:342
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:342
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:343
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:343
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:344
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:344
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:345
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:345
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:346
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:346
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:347
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:347
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:348
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:348
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:349
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:349
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:350
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:350
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:351
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:351
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:352
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:352
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:353
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:353
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:354
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:354
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:355
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:355
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:356
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:356
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:357
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:358
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:357
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:358
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:359
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:359
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:360
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:360
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:361
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:361
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:362
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:362
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:363
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:363
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:364
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:364
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:365
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:365
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:366
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:366
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:367
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:367
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:368
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:368
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:369
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:369
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:370
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:370
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:371
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:371
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:372
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:372
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:373
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:373
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:374
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:374
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:375
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:375
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:376
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:376
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:377
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:377
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:378
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:378
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:379
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:379
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:380
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:380
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:381
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:381
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:382
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:382
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:383
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:383
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:384
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:384
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:385
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:385
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:386
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:386
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:387
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:387
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:388
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:388
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:389
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:389
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:390
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:390
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:391
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:391
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:392
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:392
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:393
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:393
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:394
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:394
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:395
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:395
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:396
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:396
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:397
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:397
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:398
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:398
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:399
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:399
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:400
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:400
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:401
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:401
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:402
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:402
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:403
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:403
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:404
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:404
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:405
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:405
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:406
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:406
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:407
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:407
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:408
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:408
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:409
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:410
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:409
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:410
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:411
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:411
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:412
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:413
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:412
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:413
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:414
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:414
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:415
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:415
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:416
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:416
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:418
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:417
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:417
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:418
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:419
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:420
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:419
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:420
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:421
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:421
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:422
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:422
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:423
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:423
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:424
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:424
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:425
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:426
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:425
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:426
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:427
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:428
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:427
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:428
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:429
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:429
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:430
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:430
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:431
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:431
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:432
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:432
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:433
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:433
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:434
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:434
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:435
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:435
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:436
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:436
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:437
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:437
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:438
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:438
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:439
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:439
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:440
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:440
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:441
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:441
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:442
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:442
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:443
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:443
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:444
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:444
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:445
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:445
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:446
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:446
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:447
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:447
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:448
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:448
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:449
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:450
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:449
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:450
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:451
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:451
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:452
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:453
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:452
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:453
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:454
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:454
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:455
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:455
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:456
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:456
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:457
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:457
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:458
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:459
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:458
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:459
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:460
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:460
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:461
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:461
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:462
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:462
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:463
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:463
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:464
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:464
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:465
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:465
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:466
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:466
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:467
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:467
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:468
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:468
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:469
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:469
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:470
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:470
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:471
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:471
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:472
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:472
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:473
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:473
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:474
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:474
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:475
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:475
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:476
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:476
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:477
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:477
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:478
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:478
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:479
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:479
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:480
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:480
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:481
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:481
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:482
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:482
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:483
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:483
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:484
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:484
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:485
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:486
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:485
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:486
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:487
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:487
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:488
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:488
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:489
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:489
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:490
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:490
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:491
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:491
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:492
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:492
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:493
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:493
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:494
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:494
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:495
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:495
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:496
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:497
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:496
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:497
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:498
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:498
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:499
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:500
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:499
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:501
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:500
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:502
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:501
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:502
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:503
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:503
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:504
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:504
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:505
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:505
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:506
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:507
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:506
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:507
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:509
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:508
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:508
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:509
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:510
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:510
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:512
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:511
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:511
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:512
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:513
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:514
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:513
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:514
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:515
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:515
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:516
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:516
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:517
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:517
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:518
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:518
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:519
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:519
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:520
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:521
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:520
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:521
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:522
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:522
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:523
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:523
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:524
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:524
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:525
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:525
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:526
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:526
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:527
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:527
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:528
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:528
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:529
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:529
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:530
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:530
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:531
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:531
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:532
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:532
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:533
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:533
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:534
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:534
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:535
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:535
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:536
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:536
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:537
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:537
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:538
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:539
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:538
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:539
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:540
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:540
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:541
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:541
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:542
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:542
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:543
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:543
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:544
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:544
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:545
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:545
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:546
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:546
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:547
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:547
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:548
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:548
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:550
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:549
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:549
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:550
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:551
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:551
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:552
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:552
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:553
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:553
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:554
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:554
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:555
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:555
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:556
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:556
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:557
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:557
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:558
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:558
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:559
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:559
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:560
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:560
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:561
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:561
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:562
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:562
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:563
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:563
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:564
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:564
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:565
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:565
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:566
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:566
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:567
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:567
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:568
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:568
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:569
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:569
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:570
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:570
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:571
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:571
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:572
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:572
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:573
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:573
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:574
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:574
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:575
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:575
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:576
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:576
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:577
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:578
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:577
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:578
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:579
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:579
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:580
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:580
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:581
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:581
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:582
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:582
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:583
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:583
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:584
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:584
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:585
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:585
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:586
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:586
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:587
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:587
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:588
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:588
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:589
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:589
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:590
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:590
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:591
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:591
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:592
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:592
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:593
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:593
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:594
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:594
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:595
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:595
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:596
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:596
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:597
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:597
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:598
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:598
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:599
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:599
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:600
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:600
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:601
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:601
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:602
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:602
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:603
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:603
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:604
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:604
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:605
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:605
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:606
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:606
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:607
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:607
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:608
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:608
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:609
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:609
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:610
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:610
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:611
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:611
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:612
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:612
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:613
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:613
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:614
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:614
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:615
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:615
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:616
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:616
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:617
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:617
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:618
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:618
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:619
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:619
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:620
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:620
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:621
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:621
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:622
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:622
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:623
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:623
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:624
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:624
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:625
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:625
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:626
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:626
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:627
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:627
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:628
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:628
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:629
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:629
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:630
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:630
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:631
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:631
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:632
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:632
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:633
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:633
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:634
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:634
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:635
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:635
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:636
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:636
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:637
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:638
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:637
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:638
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:639
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:639
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:640
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:641
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:640
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:641
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:643
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:642
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:642
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:643
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:644
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:644
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:645
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:645
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:646
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:646
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:647
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:647
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:648
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:648
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:649
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:649
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:650
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:650
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:651
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:651
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:652
+INFO - [BLE_MESSAGE] Request: from: 2 to: 3 round:652
+INFO - [BLE_MESSAGE] Request: from: 1 to: 3 round:653

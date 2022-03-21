@@ -285,7 +285,7 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
                     Some(cmds) => {
                         log::info!("GET DECIDED COMMANDS: SOME");
                         for cmd in cmds {
-                            log:info!("DECIDED CMD");
+                            log::info!("DECIDED CMD");
                             store.last_executed_cmd += 1;
                             // get the decided log entry
                             if let omnipaxos_core::util::LogEntry::Decided(c) = cmd {
@@ -300,11 +300,14 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
                                     // save the result
                                     store.insert(c.id , results);
                                     // the command is completed so remove its notifier
-                                    //log::info!("command completions: {}",store.command_completions.get(&c.id));
-                                    if let Some(completion) = store.command_completions.remove(&(c.id)) {
-                                        // notify that it is completed
-                                        log::info!("NOTIFY THAT THE RESULT IS DONE");
-                                        completion.notify();
+                                    match store.command_completions.remove(&(c.id)) {
+                                        Some(completion) => {
+                                            log::info!("NOTIFY THAT THE RESULT IS DONE");
+                                            completion.notify();
+                                        }
+                                        None => {
+                                            log::info!("NOTIFYYYYYY nOT");
+                                        }
                                     }
                                 }
                             }
@@ -338,14 +341,13 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         loop {
                 let mut ble = self.ble.lock().unwrap();
                 let mut replica = self.replica.lock().unwrap();
+                let mut store = self.store.lock().unwrap();
                 if let Some(leader) = ble.tick() {
                     // a new leader is elected, pass it to SequencePaxos.
                     log::info!("TICK {}", leader.pid);
                     replica.handle_leader(leader);
-                } else {
-
+                    store.leader = Some(leader.pid);
                 }
-                let store = self.store.lock().unwrap();
                 let transport = store.transport.clone();
 
                 for out_msg in ble.get_outgoing_msgs() {
@@ -426,8 +428,9 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
                 };
                 log::info!("STRONG 6-0.5: WAIT FOR NOTIFICATION");
                 // wait to be notified that the result is ready
+                
                 notify.notified().await;
-
+                
                 log::info!("STRONG 6: NOTIFICATION JUST CAME");
                 // if  the command has been the decided the results are written
                 let results = self.store.lock().unwrap().results.remove(&id).unwrap();

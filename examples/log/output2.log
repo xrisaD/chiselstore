@@ -1,6 +1,55 @@
 INFO - Start 2 !
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:1
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:1
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:2
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:2
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:3
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:3
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] PROMISE
+INFO - TICK 3
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:4
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:4
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 0 0 3 0
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:5
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:5
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:6
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:6
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:7
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:7
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:8
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:8
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 0 0 3 1
+INFO - GET DECIDED COMMANDS: SOME
+INFO - DECIDED CMD
+INFO - DECIDED COMMAND: 1
+INFO - INSIDE QUERY 1
+INFO - RESULTS COMMAND: 1
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:9
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:9
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] PROMISE
+INFO - TICK 3
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:10
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:10
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 1 0 3 1
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:11
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:11
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:12
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:12
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:13
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:13
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:14
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:14
+INFO - Start 2 !
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:1
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:1
 INFO - TICK 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:2
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:2
@@ -9,52 +58,33 @@ INFO - [SEND] FROM 2 TO 1, BLE REQUEST:
 INFO - [SEND] PREPARE
 INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
 INFO - [SEND] PREPARE
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:3
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:3
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:3
 INFO - PROMISE IS_OK
 INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
 INFO - [SEND] ACCEPT SYNC
 INFO - PROMISE IS_OK
 INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
 INFO - [SEND] ACCEPT SYNC
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:4
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:4
-INFO - TICK 3
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 0 0 3 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:5
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:5
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:6
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:6
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 1 0 1 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:7
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:7
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:8
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:8
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:8
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:9
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:9
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:10
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:10
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 3 0 1 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:11
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:11
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:12
@@ -73,62 +103,20 @@ INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:18
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:18
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:19
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:19
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:20
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:20
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:20
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:21
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:21
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:22
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:22
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 5 0 1 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:23
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:23
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:24
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:24
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:25
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:25
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT DECIDE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT DECIDE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:26
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:26
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] DECIDE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] DECIDE
-INFO - GET DECIDED COMMANDS: SOME
-INFO - DECIDED CMD
-INFO - DECIDED COMMAND: 1
-INFO - INSIDE QUERY 1
-INFO - INSIDE QUERY 2
-INFO - RESULTS COMMAND: 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:27
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:27
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:28
@@ -145,138 +133,67 @@ INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:33
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:33
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:34
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:34
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 0 0 3 1
+INFO - GET DECIDED COMMANDS: SOME
+INFO - DECIDED CMD
+INFO - DECIDED COMMAND: 1
+INFO - INSIDE QUERY 1
+INFO - INSIDE QUERY 2
+INFO - RESULTS COMMAND: 1
+INFO - I AM THE LEADER
+INFO - NOTIFYYYYYY nOT
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:35
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:35
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:36
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:36
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 7 0 1 0
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:37
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:37
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:38
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:38
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:39
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:39
-INFO - PROMISE IS_OK
-INFO - PROMISE IS_OK
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:39
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:40
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:40
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:41
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:41
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:42
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:42
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:43
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 9 0 1 1
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:43
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:44
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:44
-INFO - PROMISE IS_OK
-INFO - PROMISE IS_OK
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:44
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:45
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:45
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:46
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:46
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 11 0 1 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:47
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:47
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:48
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:48
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:48
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:49
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:49
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] DECIDE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] DECIDE
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:50
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:50
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 13 0 1 1
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:51
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:51
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:52
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:52
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:53
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:53
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:54
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:54
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:55
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:55
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:56
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] DECIDE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] DECIDE
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:56
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:57
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:57
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:58
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:58
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 15 0 1 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:59
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:59
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:60
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:60
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:61
@@ -287,66 +204,28 @@ INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:63
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:63
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:64
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:64
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:65
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:65
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:65
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:66
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:66
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PROMISE
-INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:67
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:67
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPTED
-INFO - [SEND] ACCEPTED: 17 0 1 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:68
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:68
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:69
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:69
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:70
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:70
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
-INFO - PROMISE IS_OK
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] ACCEPT SYNC
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:70
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:71
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:71
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] DECIDE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] DECIDE
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:72
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:72
-INFO - TICK 3
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:73
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:73
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:74
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:74
-INFO - TICK 2
-INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
-INFO - [SEND] PREPARE
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:75
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:75
+INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:75
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:76
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:76
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:77
@@ -369,374 +248,73 @@ INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:85
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:85
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:86
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:86
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:87
+INFO - TICK 2
+INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] PREPARE
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:87
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:87
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:88
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:88
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:89
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:89
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] PROMISE
+INFO - TICK 3
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:90
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:90
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 2 0 3 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:91
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:91
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:92
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:92
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:93
+INFO - TICK 2
+INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
+INFO - [SEND] PREPARE
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] PREPARE
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:93
+INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:93
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
+INFO - PROMISE IS_OK
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] ACCEPT SYNC
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:94
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:94
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:95
+INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
+INFO - [SEND] DECIDE
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] DECIDE
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:95
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:96
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:96
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:97
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] PROMISE
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:97
+INFO - [SEND] FROM 2 TO 3, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 4 0 3 1
+INFO - TICK 1
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:98
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:98
+INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
+INFO - [SEND] PROMISE
+INFO - TICK 3
 INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:99
 INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:99
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:100
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:100
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:101
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:101
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:102
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:103
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:102
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:103
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:104
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:104
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:105
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:105
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:106
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:106
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:107
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:107
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:108
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:108
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:109
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:109
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:110
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:110
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:111
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:111
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:112
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:112
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:113
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:113
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:114
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:114
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:115
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:115
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:116
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:116
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:117
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:117
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:118
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:118
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:119
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:119
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:120
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:120
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:121
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:121
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:122
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:122
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:123
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:123
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:124
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:124
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:125
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:125
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:126
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:126
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:127
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:127
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:128
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:128
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:129
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:129
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:130
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:130
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:131
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:131
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:132
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:132
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:133
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:133
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:134
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:134
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:135
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:135
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:136
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:136
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:137
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:137
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:138
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:138
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:139
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:139
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:140
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:140
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:141
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:141
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:142
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:142
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:143
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:143
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:144
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:144
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:145
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:145
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:146
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:146
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:147
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:147
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:148
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:148
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:149
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:149
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:150
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:150
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:151
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:151
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:152
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:152
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:153
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:153
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:154
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:154
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:155
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:155
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:156
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:156
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:157
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:157
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:158
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:158
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:159
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:159
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:160
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:160
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:161
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:161
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:162
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:162
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:163
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:163
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:164
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:164
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:165
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:165
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:166
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:166
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:167
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:167
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:168
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:168
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:169
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:170
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:169
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:170
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:171
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:171
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:172
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:172
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:173
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:173
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:174
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:174
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:175
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:175
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:176
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:176
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:177
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:177
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:178
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:178
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:179
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:179
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:180
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:180
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:181
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:181
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:182
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:182
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:183
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:183
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:184
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:184
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:185
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:185
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:186
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:186
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:187
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:187
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:188
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:188
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:189
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:189
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:190
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:190
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:191
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:191
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:192
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:192
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:193
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:193
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:194
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:194
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:195
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:196
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:195
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:196
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:197
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:197
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:198
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:198
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:199
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:199
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:200
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:200
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:201
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:201
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:202
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:202
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:203
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:203
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:204
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:204
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:205
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:205
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:206
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:207
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:206
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:207
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:208
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:208
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:209
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:209
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:210
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:210
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:211
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:211
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:212
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:212
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:213
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:213
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:214
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:214
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:215
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:215
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:216
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:216
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:217
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:217
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:218
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:218
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:219
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:219
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:220
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:220
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:221
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:221
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:222
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:222
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:223
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:223
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:224
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:224
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:225
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:225
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:226
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:226
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:227
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:228
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:227
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:228
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:229
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:229
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:230
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:230
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:231
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:231
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:232
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:232
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:233
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:233
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:234
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:234
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:235
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:235
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:236
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:236
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:237
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:237
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:238
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:239
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:238
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:239
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:240
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:240
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:241
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:241
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:242
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:243
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:242
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:243
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:244
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:244
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:245
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:245
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:246
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:246
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:247
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:247
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:248
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:248
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:249
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:249
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:250
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:250
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:251
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:251
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:252
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:252
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:253
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:253
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:254
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:254
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:255
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:255
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:256
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:256
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:257
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:257
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:258
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:258
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:259
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:259
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:260
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:260
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:261
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:261
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:262
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:262
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:263
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:263
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:264
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:264
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:265
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:265
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:266
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:266
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:267
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:267
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:268
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:268
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:269
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:269
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:270
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:270
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:271
-INFO - [BLE_MESSAGE] Request: from: 3 to: 2 round:271
-INFO - [BLE_MESSAGE] Request: from: 1 to: 2 round:272
+INFO - [SEND] FROM 2 TO 1, BLE REQUEST: 
+INFO - [SEND] ACCEPTED
+INFO - [SEND] ACCEPTED: 5 0 1 1
