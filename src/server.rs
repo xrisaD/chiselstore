@@ -240,8 +240,7 @@ pub struct StoreServer<T: StoreTransport + Send + Sync> {
     ble: Arc<Mutex<BallotLeaderElection>>,
     /// Transport layer.
     transport: Arc<T>,
-    query_results_holder: Arc<Mutex<QueryResultsHolder>>,
-    store:  Arc<Mutex<Store>>
+    query_results_holder: Arc<Mutex<QueryResultsHolder>>
 }
 
 impl Storage<StoreCommand, KVSnapshot> for Store
@@ -400,8 +399,7 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
             replica,
             ble,
             transport: Arc::new(transport),
-            query_results_holder,
-            store: Arc::new(Mutex::new(store.clone()))
+            query_results_holder
         })
     }
     
@@ -440,16 +438,8 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         stmt: S,
         consistency: Consistency,
     ) -> Result<QueryResults, StoreError> {
-         // If the statement is a read statement, let's use whatever
-        // consistency the user provided; otherwise fall back to strong
-        // consistency.
-        let consistency = if is_read_statement(stmt.as_ref()) {
-            consistency
-        } else {
-            Consistency::Strong
-        };
-        let results = match consistency {
-                Consistency::Strong => {
+        
+        let results = {
                 log::info!("before notify");
                 let (notify, id) = {
                     let id = self.next_cmd_id.fetch_add(1, Ordering::SeqCst);
@@ -476,13 +466,6 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
                 // TODO: RETURN AN ERROR IF THIS IS AN
                 log::info!("results notify");
                 results?
-            } Consistency::RelaxedReads => {
-                let conn = {
-                    let mut store = self.store.lock().unwrap();
-                    store.get_connection()
-                };
-                query(conn, stmt.as_ref().to_string())?
-            }
         };  
         log::info!("END notify");
         Ok(results)
