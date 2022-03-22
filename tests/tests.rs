@@ -26,20 +26,22 @@ async fn simple_query() {
     let mut replicas = common::setup(2).await;
     log(format!("OOOOOOOOOOOOOOOOOOOOOOOOOOoOOOOoOO").to_string());
     // run test
-    let res = tokio::task::spawn(async {
+    tokio::task::spawn(async {
         log(format!("beforeeeeeee query").to_string());
         let res = common::run_query(1, String::from("SELECT 1+1;")).await.unwrap();
-        // log(format!("after query").to_string());
-        // assert!(res == "3");
-        res
+        log(format!("after query").to_string());
+        assert!(res == "3");
     }).await.unwrap();
     // log(format!("beforeeeeeee query").to_string());
     // let res = common::run_query(1, String::from("CREATE TABLE X (X INTEGER);")).await.unwrap();
     // assert!(res == "3");
+    // // log(format!("after query").to_string());
+    // log(format!("before query").to_string());
+    // let res = common::run_query(1, String::from("CREATE TABLE X (X INTEGER);")).await;
     // log(format!("after query").to_string());
-    let res = common::run_query(1, String::from("CREATE TABLE X (X INTEGER);")).await;
-    //tokio::join!(res);
-    let res = res.unwrap();
-    assert!(res == "3");
+    // //tokio::join!(res);
+    // let res = res.unwrap();
+    // assert!(res == "3");
     log(format!("enddddddddddddddddddddddd").to_string());
+    common::shutdown_replicas(replicas).await;
 }

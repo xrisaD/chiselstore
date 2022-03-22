@@ -242,7 +242,8 @@ pub struct StoreServer<T: StoreTransport + Send + Sync> {
     /// Transport layer.
     transport: Arc<T>,
     query_results_holder: Arc<Mutex<QueryResultsHolder>>,
-    this_id: u64
+    this_id: u64,
+    halt: Arc<Mutex<bool>>,
 }
 
 impl Storage<StoreCommand, KVSnapshot> for Store
@@ -364,7 +365,7 @@ pub struct QueryResults {
 }
 
 const NOP_TRANSITION_ID: u64 = 0;
-const HEARTBEAT_TIMEOUT: u64 =  100;
+const HEARTBEAT_TIMEOUT: u64 =  10;
 impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     /// Start a new server as part of a ChiselStore cluster.
     pub fn start(this_id: u64, peers: Vec<u64>, transport: T) -> Result<Self, StoreError> {
@@ -402,37 +403,59 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
             ble,
             transport: Arc::new(transport),
             query_results_holder,
-            this_id
+            this_id,
+            halt: Arc::new(Mutex::new(false)),
         })
     }
     
-    pub fn run(&self) {
-        loop {
-                let mut ble = self.ble.lock().unwrap();
-                let mut replica = self.replica.lock().unwrap();
-                //let mut store = self.store.lock().unwrap();
-                if let Some(leader) = ble.tick() {
-                    // a new leader is elected, pass it to SequencePaxos.
-                    replica.handle_leader(leader);
-                }
-                let transport = self.transport.clone();
+    pub async fn run(&self) {
+        loop {  
+            if *self.halt.lock().unwrap() {
+                break
+            }
+            let mut ble = self.ble.lock().unwrap();
+            let mut replica = self.replica.lock().unwrap();
+            //let mut store = self.store.lock().unwrap();
+            // if let Some(leader) = ble.tick() {
+            //     // a new leader is elected, pass it to SequencePaxos.
+            //     replica.handle_leader(leader);
+            // }
+            let transport = self.transport.clone();
 
-                for out_msg in ble.get_outgoing_msgs() {
-                    let receiver = out_msg.to;
-                    // send out_msg to receiver on network layer
-                    transport.send_ble(receiver, out_msg);      
-                }
+            for out_msg in ble.get_outgoing_msgs() {
+                let receiver = out_msg.to;
+                // send out_msg to receiver on network layer
+                transport.send_ble(receiver, out_msg);      
+            }
 
-                for out_msg in replica.get_outgoing_msgs() {
-                    let receiver = out_msg.to;
-                    // send out_msg to receiver on network layer
-                    transport.send(receiver, out_msg);
-                }
+            for out_msg in replica.get_outgoing_msgs() {
+                let receiver = out_msg.to;
+                // send out_msg to receiver on network layer
+                transport.send(receiver, out_msg);
+            }
             
-            std::thread::sleep(Duration::from_millis(1));
+            tokio::time::sleep(Duration::from_millis(1)).await;
         }
     }
     
+    /// Run the blocking event loop.
+    pub async fn run_leader(&self) {
+        loop {
+            tokio::time::sleep(Duration::from_millis(100)).await;
+
+            if *self.halt.lock().unwrap() {
+                break
+            }
+
+            let mut sequence_paxos = self.replica.lock().unwrap();
+            let mut ballot_leader_election = self.ble.lock().unwrap();
+
+            if let Some(leader) = ballot_leader_election.tick() {
+                // a new leader is elected, pass it to SequencePaxos.
+                sequence_paxos.handle_leader(leader);
+            }
+        }
+    }
 
     /// Execute a SQL statement on the ChiselStore cluster.
     pub async fn query<S: AsRef<str>>(
@@ -483,8 +506,10 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     pub fn get_id(&self) -> u64 {
         self.this_id
     }
-}
 
-fn is_read_statement(stmt: &str) -> bool {
-    stmt.to_lowercase().starts_with("select")
+    /// kill the replica
+    pub fn kill(&self, new_halt: bool) {
+        let mut halt = self.halt.lock().unwrap();
+        *halt = new_halt;
+    }
 }

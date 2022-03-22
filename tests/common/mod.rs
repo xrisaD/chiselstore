@@ -38,20 +38,21 @@ fn node_rpc_addr(id: u64) -> String {
 
 pub struct Replica {
     store_server: std::sync::Arc<StoreServer<RpcTransport>>,
-    // stop_sender: tokio::sync::oneshot::Sender<()>,
-    // shutdown_sender: tokio::sync::oneshot::Sender<()>,
+    server_kill_sender: tokio::sync::oneshot::Sender<()>,
+    rpc_kill_sender: tokio::sync::oneshot::Sender<()>,
+    message_handle: tokio::task::JoinHandle<()>,
+    rpc_handle: tokio::task::JoinHandle<Result<(), tonic::transport::Error>>,
 }
 
 
 impl Replica {
-    // pub async fn shutdown(self) {
-    //     self.shutdown_sender.send(());
-    //     self.rpc_handle.await.unwrap();
+    pub async fn shutdown(self) {
+        self.server_kill_sender.send(());
+        self.rpc_handle.await.unwrap();
 
-    //     self.halt_sender.send(());
-    //     self.store_message_handle.await.unwrap();
-    //     self.store_ble_handle.await.unwrap();
-    // }
+        self.rpc_kill_sender.send(());
+        self.message_handle.await.unwrap();
+    }
 
     pub fn is_leader(&self) -> bool {
         //self.store_server.is_leader()
@@ -84,23 +85,31 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
     let server = StoreServer::start(id, peers, transport).unwrap();
     let server = Arc::new(server);
 
-    let (kill_sender, kill_receiver) = oneshot::channel::<()>();
-    let f = {
-        
+    let (server_kill_sender, server_kill_receiver) = oneshot::channel::<()>();
+    let message_handle = {
+        let server_receiver = server.clone();
         let server = server.clone();
-        tokio::task::spawn_blocking(move || {
+        let x = tokio::task::spawn(async move {
             server.run();
-        })
+        });
+
+        tokio::task::spawn(async move {
+            match server_kill_receiver.await {
+                Ok(_) => server_receiver.kill(true),
+                Err(_) => println!("Received error in halt_receiver"),
+            };
+        });
+        x
     };
 
-    let (shutdown_sender, shutdown_receiver) = oneshot::channel::<()>();
-    let g = {
+    let (rpc_kill_sender, rpc_kill_receiver) = oneshot::channel::<()>();
+    let rpc_handle = {
         let server = server.clone();
         let rpc = RpcService::new(server);
         tokio::task::spawn(async move {
             let ret = Server::builder()
             .add_service(RpcServer::new(rpc))
-            .serve_with_shutdown(rpc_listen_addr, shutdown_receiver.map(drop))
+            .serve_with_shutdown(rpc_listen_addr, rpc_kill_receiver.map(drop))
             .await;
             
             ret
@@ -109,6 +118,10 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
     // todo: check the results that there is not error
     return Replica {
         store_server: server.clone(),
+        server_kill_sender,
+        rpc_kill_sender,
+        rpc_handle,
+        message_handle
     }
 }
 
@@ -133,8 +146,8 @@ pub async fn run_query(id: u64, line: String) -> Result<String, Box<dyn Error>>{
     Ok(res)
 }
 
-async fn shutdown_replicas(mut replicas: Vec<Replica>) {
-    // while let Some(r) = replicas.pop() {
-    //     r.shutdown().await;
-    // }
+pub async fn shutdown_replicas(mut replicas: Vec<Replica>) {
+    while let Some(r) = replicas.pop() {
+        r.shutdown().await;
+    }
 }
