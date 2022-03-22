@@ -241,7 +241,8 @@ pub struct StoreServer<T: StoreTransport + Send + Sync> {
     ble: Arc<Mutex<BallotLeaderElection>>,
     /// Transport layer.
     transport: Arc<T>,
-    query_results_holder: Arc<Mutex<QueryResultsHolder>>
+    query_results_holder: Arc<Mutex<QueryResultsHolder>>,
+    this_id: u64
 }
 
 impl Storage<StoreCommand, KVSnapshot> for Store
@@ -400,7 +401,8 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
             replica,
             ble,
             transport: Arc::new(transport),
-            query_results_holder
+            query_results_holder,
+            this_id
         })
     }
     
@@ -476,6 +478,10 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     }
     pub fn handle_ble(&self, msg: BLEMessage) {
         self.ble.lock().unwrap().handle(msg);
+    }
+
+    pub fn get_id(&self) -> u64 {
+        self.this_id
     }
 }
 

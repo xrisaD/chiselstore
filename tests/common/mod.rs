@@ -7,17 +7,18 @@ use chiselstore::{
 use std::sync::Arc;
 use structopt::StructOpt;
 use tonic::transport::Server;
+use std::io::Write;
+use tokio::io::{AsyncBufReadExt, BufReader};
 
-#[derive(StructOpt, Debug)]
-#[structopt(name = "gouged")]
-struct Opt {
-    /// The ID of this server.
-    #[structopt(short, long)]
-    id: usize,
-    /// The IDs of peers.
-    #[structopt(short, long, required = false)]
-    peers: Vec<usize>,
+pub mod proto {
+    tonic::include_proto!("proto");
 }
+
+use proto::rpc_client::RpcClient;
+use proto::{Consistency, Query};
+
+use std::error::Error;
+use tokio::sync::oneshot;
 
 /// Node authority (host and port) in the cluster.
 fn node_authority(id: u64) -> (&'static str, u16) {
@@ -32,37 +33,103 @@ fn node_rpc_addr(id: u64) -> String {
     format!("http://{}:{}", host, port)
 }
 
-
-pub async fn setup() {
-    // some setup code, like creating required files/directories, starting
-    // servers, etc.
-    let x1 = start_server(1, vec![2, 3]).await;
-    let x2 = start_server(2, vec![1, 3]).await;
-    let x3 = start_server(3, vec![1, 2]).await;
+pub struct Replica {
+    store_server: std::sync::Arc<StoreServer<RpcTransport>>
 }
 
-async fn start_server(id: u64, peers: Vec<u64>) -> Result<()> {
+
+impl Replica {
+    // pub async fn shutdown(self) {
+    //     self.shutdown_sender.send(());
+    //     self.rpc_handle.await.unwrap();
+
+    //     self.halt_sender.send(());
+    //     self.store_message_handle.await.unwrap();
+    //     self.store_ble_handle.await.unwrap();
+    // }
+
+    pub fn is_leader(&self) -> bool {
+        //self.store_server.is_leader()
+        false
+    }
+
+    pub fn get_id(&self) -> u64 {
+        self.store_server.get_id()
+    }
+}
+
+pub async fn setup(number_of_replicas: u64) -> Vec<Replica> {
+    // some setup code, like creating required files/directories, starting
+    // servers, etc.
+    let mut replicas: Vec<Replica> = Vec::new();
+    for id in 1..(number_of_replicas+1) {
+        println!("IN SET UP {}", id);
+        let mut peers: Vec<u64> = (1..number_of_replicas+1).collect();
+        peers.remove((id - 1) as usize);
+        replicas.push(start_server(id, peers).await);
+    }
+    println!("END SET UP");
+    return replicas
+}
+
+async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
     let (host, port) = node_authority(id);
     let rpc_listen_addr = format!("{}:{}", host, port).parse().unwrap();
     let transport = RpcTransport::new(Box::new(node_rpc_addr));
-    let server = StoreServer::start(id, peers, transport)?;
+    let server = StoreServer::start(id, peers, transport).unwrap();
     let server = Arc::new(server);
+
+    let (kill_sender, kill_receiver) = oneshot::channel::<()>();
     let f = {
+        
         let server = server.clone();
         tokio::task::spawn_blocking(move || {
             server.run();
         })
     };
-    let rpc = RpcService::new(server);
-    let g = tokio::task::spawn(async move {
-        println!("RPC listening to {} ...", rpc_listen_addr);
-        let ret = Server::builder()
+
+    let (shutdown_sender, shutdown_receiver) = oneshot::channel::<()>();
+    let g = {
+        let server = server.clone();
+        let rpc = RpcService::new(server);
+        tokio::task::spawn(async move {
+            let ret = Server::builder()
             .add_service(RpcServer::new(rpc))
-            .serve(rpc_listen_addr)
+            .serve_with_shutdown(rpc_listen_addr, shutdown_receiver)
             .await;
-        ret
+            
+            ret
+        })
+    };
+    // todo: check the results that there is not error
+    return Replica {
+        store_server: server.clone(),
+    }
+}
+
+pub async fn run_query(id: u64, line: String) -> Result<String, Box<dyn Error>>{
+    // create address for the replica
+    let addr = node_rpc_addr(id);
+    // connect
+    let mut client = RpcClient::connect(addr).await.unwrap();
+    // query creation
+    let query = tonic::Request::new(Query {
+        sql: line.to_string(),
+        consistency: Consistency::RelaxedReads as i32,
     });
-    let results = tokio::try_join!(f, g)?;
-    results.1?;
-    Ok(())
+    // execute the query
+    let response = client.execute(query).await.unwrap();
+    // get the response
+    let response = response.into_inner();
+    if response.rows.len() == 0 || response.rows[0].values.len() == 0 {
+        return Ok(String::from(""));
+    }
+    let res = response.rows[0].values[0].clone();
+    Ok(res)
+}
+
+async fn shutdown_replicas(mut replicas: Vec<Replica>) {
+    // while let Some(r) = replicas.pop() {
+    //     r.shutdown().await;
+    // }
 }

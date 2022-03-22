@@ -24,6 +24,7 @@ slog-term = "2.8.0"
 slog-async = "2.7.0"
 log = "0.4"
 log4rs = "1.0.0"
+sloggers = "*"
 
 [build-dependencies]
 tonic-build = "0.5.2"
