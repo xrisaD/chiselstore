@@ -25,6 +25,8 @@ slog-async = "2.7.0"
 log = "0.4"
 log4rs = "1.0.0"
 sloggers = "*"
+futures = "*"
+futures-util = "0.3"
 
 [build-dependencies]
 tonic-build = "0.5.2"

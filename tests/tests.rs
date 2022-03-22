@@ -38,7 +38,7 @@ async fn simple_query() {
     // assert!(res == "3");
     // log(format!("after query").to_string());
     let res = common::run_query(1, String::from("CREATE TABLE X (X INTEGER);")).await;
-    tokio::join!(res);
+    //tokio::join!(res);
     let res = res.unwrap();
     assert!(res == "3");
     log(format!("enddddddddddddddddddddddd").to_string());

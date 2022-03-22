@@ -4,6 +4,9 @@ use chiselstore::{
     rpc::{RpcService, RpcTransport},
     StoreServer,
 };
+
+use futures_util::future::FutureExt;
+
 use std::sync::Arc;
 use structopt::StructOpt;
 use tonic::transport::Server;
@@ -34,7 +37,9 @@ fn node_rpc_addr(id: u64) -> String {
 }
 
 pub struct Replica {
-    store_server: std::sync::Arc<StoreServer<RpcTransport>>
+    store_server: std::sync::Arc<StoreServer<RpcTransport>>,
+    // stop_sender: tokio::sync::oneshot::Sender<()>,
+    // shutdown_sender: tokio::sync::oneshot::Sender<()>,
 }
 
 
@@ -95,7 +100,7 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
         tokio::task::spawn(async move {
             let ret = Server::builder()
             .add_service(RpcServer::new(rpc))
-            .serve_with_shutdown(rpc_listen_addr, shutdown_receiver)
+            .serve_with_shutdown(rpc_listen_addr, shutdown_receiver.map(drop))
             .await;
             
             ret
