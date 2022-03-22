@@ -38,8 +38,9 @@ impl QueryResultsHolder {
     }
 
     pub fn push_result(&mut self, id: u64, result: Result<QueryResults, StoreError>) {
-        if let Some(completion) = self.query_completion_notifiers.remove(&(id as u64)) {
-            self.results.insert(id as u64, result);
+        if let Some(completion) = self.query_completion_notifiers.remove(&(id)) {
+            self.results.insert(id, result);
+            log::info!("lets notify!!");
             completion.notify();
         }
     }
@@ -411,7 +412,6 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
                 if let Some(leader) = ble.tick() {
                     // a new leader is elected, pass it to SequencePaxos.
                     replica.handle_leader(leader);
-                    //store.leader = Some(leader.pid);
                 }
                 let transport = self.transport.clone();
 

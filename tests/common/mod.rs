@@ -20,14 +20,14 @@ struct Opt {
 }
 
 /// Node authority (host and port) in the cluster.
-fn node_authority(id: usize) -> (&'static str, u16) {
+fn node_authority(id: u64) -> (&'static str, u16) {
     let host = "127.0.0.1";
     let port = 50000 + (id as u16);
     (host, port)
 }
 
 /// Node RPC address in cluster.
-fn node_rpc_addr(id: usize) -> String {
+fn node_rpc_addr(id: u64) -> String {
     let (host, port) = node_authority(id);
     format!("http://{}:{}", host, port)
 }
@@ -41,7 +41,7 @@ pub async fn setup() {
     let x3 = start_server(3, vec![1, 2]).await;
 }
 
-async fn start_server(id: usize, peers: Vec<usize>) -> Result<()> {
+async fn start_server(id: u64, peers: Vec<u64>) -> Result<()> {
     let (host, port) = node_authority(id);
     let rpc_listen_addr = format!("{}:{}", host, port).parse().unwrap();
     let transport = RpcTransport::new(Box::new(node_rpc_addr));

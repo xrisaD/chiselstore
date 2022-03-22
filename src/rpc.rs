@@ -413,6 +413,7 @@ impl StoreTransport for RpcTransport {
                 });
             }
             PaxosMsg::ProposalForward(x) => {
+                log::info!("[SEND] PROPOSAL FORWARD");
                 let entries = x.iter().map(|entry| { Command {id: entry.id, sql: entry.sql.clone()}}).collect();
                 let themessage = Rpcproposalforward (RpcProposalForward {entries});
                 let request = RpcMessage {to, from, message: Some(themessage)};
@@ -477,27 +478,6 @@ impl StoreTransport for RpcTransport {
             }
         }
     }
-
-    // async fn delegate(
-    //     &self,
-    //     to_id: u64,
-    //     sql: String,
-    //     consistency: Consistency,
-    // ) -> Result<crate::server::QueryResults, crate::StoreError> {
-    //     let addr = (self.node_addr)(to_id);
-    //     let mut client = self.connections.connection(addr.clone()).await;
-    //     let query = tonic::Request::new(Query {
-    //         sql,
-    //         consistency: consistency as i32,
-    //     });
-    //     let response = client.conn.execute(query).await.unwrap();
-    //     let response = response.into_inner();
-    //     let mut rows = vec![];
-    //     for row in response.rows {
-    //         rows.push(crate::server::QueryRow { values: row.values });
-    //     }
-    //     Ok(crate::server::QueryResults { rows })
-    // }
 }
 
 /// RPC service.
@@ -532,15 +512,17 @@ impl Rpc for RpcService {
             proto::Consistency::Strong => Consistency::Strong,
             proto::Consistency::RelaxedReads => Consistency::RelaxedReads,
         };
-        println!("CONSISTENCY! ");
         // pass the query to the server
         let server = self.server.clone();
-        println!("before query! ");
+        log::info!("before query! ");
         let results = match server.query(query.sql, consistency).await {
             Ok(results) => results,
-            Err(e) => return Err(Status::internal(format!("{}", e))),
+            Err(e) => {
+                log::info!("ERROR!");
+                return Err(Status::internal(format!("{}", e)))
+            },
         };
-        println!("after query! ");
+        log::info!("after query! ");
         let mut rows = vec![];
         for row in results.rows {
             rows.push(QueryRow {
@@ -999,7 +981,7 @@ impl Rpc for RpcService {
                 }
             }
             Some(Heartbeatrequest(x)) => { 
-                log::info!("[BLE_MESSAGE] Request: from: {} to: {} round:{}",from, to, x.round);
+                //log::info!("[BLE_MESSAGE] Request: from: {} to: {} round:{}",from, to, x.round);
                 let theblemessage = HeartbeatMsg::Request(HeartbeatRequest{round: x.round});
                 let msg = omnipaxos_core::ballot_leader_election::messages::BLEMessage{to, from, msg: theblemessage};
                 let server = self.server.clone();
