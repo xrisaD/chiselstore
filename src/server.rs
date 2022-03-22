@@ -364,6 +364,18 @@ pub struct QueryResults {
     pub rows: Vec<QueryRow>,
 }
 
+use sloggers::Build;
+use sloggers::terminal::{TerminalLoggerBuilder, Destination};
+use sloggers::types::Severity;
+fn log(s: String) {
+    let mut builder = TerminalLoggerBuilder::new();
+    builder.level(Severity::Debug);
+    builder.destination(Destination::Stderr);
+
+    let logger = builder.build().unwrap();
+    info!(logger, "{}", s);
+}
+
 const NOP_TRANSITION_ID: u64 = 0;
 const HEARTBEAT_TIMEOUT: u64 =  10;
 impl<T: StoreTransport + Send + Sync> StoreServer<T> {
@@ -410,43 +422,44 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     
     pub async fn run(&self) {
         loop {  
+            tokio::time::sleep(Duration::from_millis(1)).await;
+            // let halt = *self.halt.lock().unwrap();
             if *self.halt.lock().unwrap() {
+               // log(format!("killlllllll inside after BREAK {}", halt).to_string());
                 break
             }
+            log::info!("run run");
             let mut ble = self.ble.lock().unwrap();
             let mut replica = self.replica.lock().unwrap();
-            //let mut store = self.store.lock().unwrap();
             // if let Some(leader) = ble.tick() {
             //     // a new leader is elected, pass it to SequencePaxos.
             //     replica.handle_leader(leader);
             // }
-            let transport = self.transport.clone();
 
             for out_msg in ble.get_outgoing_msgs() {
                 let receiver = out_msg.to;
                 // send out_msg to receiver on network layer
-                transport.send_ble(receiver, out_msg);      
+                self.transport.send_ble(receiver, out_msg);      
             }
 
             for out_msg in replica.get_outgoing_msgs() {
                 let receiver = out_msg.to;
                 // send out_msg to receiver on network layer
-                transport.send(receiver, out_msg);
+                self.transport.send(receiver, out_msg);
             }
             
-            tokio::time::sleep(Duration::from_millis(1)).await;
         }
     }
     
-    /// Run the blocking event loop.
+    // /// Run the blocking event loop.
     pub async fn run_leader(&self) {
         loop {
+            log::info!("run run leader");
             tokio::time::sleep(Duration::from_millis(100)).await;
-
             if *self.halt.lock().unwrap() {
+               // log(format!("killlllllll inside after BREAK leader").to_string());
                 break
             }
-
             let mut sequence_paxos = self.replica.lock().unwrap();
             let mut ballot_leader_election = self.ble.lock().unwrap();
 
@@ -509,7 +522,9 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
 
     /// kill the replica
     pub fn kill(&self, new_halt: bool) {
+        log(format!("killlllllll inside").to_string());
         let mut halt = self.halt.lock().unwrap();
         *halt = new_halt;
+        log(format!("killlllllll inside after {}", *halt).to_string());
     }
 }

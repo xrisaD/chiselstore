@@ -41,17 +41,19 @@ pub struct Replica {
     server_kill_sender: tokio::sync::oneshot::Sender<()>,
     rpc_kill_sender: tokio::sync::oneshot::Sender<()>,
     message_handle: tokio::task::JoinHandle<()>,
+    leader_handle: tokio::task::JoinHandle<()>,
     rpc_handle: tokio::task::JoinHandle<Result<(), tonic::transport::Error>>,
 }
 
 
 impl Replica {
     pub async fn shutdown(self) {
+        self.rpc_kill_sender.send(());
         self.server_kill_sender.send(());
         self.rpc_handle.await.unwrap();
 
-        self.rpc_kill_sender.send(());
         self.message_handle.await.unwrap();
+        self.leader_handle.await.unwrap();
     }
 
     pub fn is_leader(&self) -> bool {
@@ -78,6 +80,19 @@ pub async fn setup(number_of_replicas: u64) -> Vec<Replica> {
     return replicas
 }
 
+use slog::info;
+use sloggers::Build;
+use sloggers::terminal::{TerminalLoggerBuilder, Destination};
+use sloggers::types::Severity;
+fn log(s: String) {
+    let mut builder = TerminalLoggerBuilder::new();
+    builder.level(Severity::Debug);
+    builder.destination(Destination::Stderr);
+
+    let logger = builder.build().unwrap();
+    info!(logger, "{}", s);
+}
+
 async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
     let (host, port) = node_authority(id);
     let rpc_listen_addr = format!("{}:{}", host, port).parse().unwrap();
@@ -86,20 +101,29 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
     let server = Arc::new(server);
 
     let (server_kill_sender, server_kill_receiver) = oneshot::channel::<()>();
-    let message_handle = {
+    let (message_handle, leader_handle) = {
         let server_receiver = server.clone();
-        let server = server.clone();
-        let x = tokio::task::spawn(async move {
-            server.run();
-        });
+        let server_run  = server.clone();
+        let server_leader  = server.clone();
 
         tokio::task::spawn(async move {
             match server_kill_receiver.await {
-                Ok(_) => server_receiver.kill(true),
+                Ok(_) => { server_receiver.kill(true);
+                    log(format!("killlllllll").to_string());},
                 Err(_) => println!("Received error in halt_receiver"),
             };
         });
-        x
+
+        let x = tokio::task::spawn(async move {
+            server_run.run().await;
+        });
+
+        //run_leader
+        let y = tokio::task::spawn(async move {
+            server_leader.run_leader().await;
+        });
+
+        (x, y)
     };
 
     let (rpc_kill_sender, rpc_kill_receiver) = oneshot::channel::<()>();
@@ -110,8 +134,7 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
             let ret = Server::builder()
             .add_service(RpcServer::new(rpc))
             .serve_with_shutdown(rpc_listen_addr, rpc_kill_receiver.map(drop))
-            .await;
-            
+            .await;  
             ret
         })
     };
@@ -121,7 +144,8 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
         server_kill_sender,
         rpc_kill_sender,
         rpc_handle,
-        message_handle
+        message_handle,
+        leader_handle
     }
 }
 
@@ -149,5 +173,6 @@ pub async fn run_query(id: u64, line: String) -> Result<String, Box<dyn Error>>{
 pub async fn shutdown_replicas(mut replicas: Vec<Replica>) {
     while let Some(r) = replicas.pop() {
         r.shutdown().await;
+        log(format!("SHUTDOWN").to_string());
     }
 }

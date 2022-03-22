@@ -13,11 +13,6 @@ fn log(s: String) {
     info!(logger, "{}", s);
 }
 
-#[tokio::test]
-async fn simpler() {
-    assert!(1 == 1);
-}
-
 #[tokio::test(flavor = "multi_thread")]
 async fn simple_query() {
     // set up the servers
@@ -30,18 +25,9 @@ async fn simple_query() {
         log(format!("beforeeeeeee query").to_string());
         let res = common::run_query(1, String::from("SELECT 1+1;")).await.unwrap();
         log(format!("after query").to_string());
-        assert!(res == "3");
+        assert!(res == "2");
     }).await.unwrap();
-    // log(format!("beforeeeeeee query").to_string());
-    // let res = common::run_query(1, String::from("CREATE TABLE X (X INTEGER);")).await.unwrap();
-    // assert!(res == "3");
-    // // log(format!("after query").to_string());
-    // log(format!("before query").to_string());
-    // let res = common::run_query(1, String::from("CREATE TABLE X (X INTEGER);")).await;
-    // log(format!("after query").to_string());
-    // //tokio::join!(res);
-    // let res = res.unwrap();
-    // assert!(res == "3");
+
     log(format!("enddddddddddddddddddddddd").to_string());
     common::shutdown_replicas(replicas).await;
 }
