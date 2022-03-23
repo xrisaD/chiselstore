@@ -42,7 +42,7 @@ pub struct Replica {
     rpc_kill_sender: tokio::sync::oneshot::Sender<()>,
     message_handle: tokio::task::JoinHandle<()>,
     leader_handle: tokio::task::JoinHandle<()>,
-    rpc_handle: tokio::task::JoinHandle<Result<(), tonic::transport::Error>>,
+    rpc_handle: tokio::task::JoinHandle<Result<(), tonic::transport::Error>>
 }
 
 
@@ -56,13 +56,15 @@ impl Replica {
         self.leader_handle.await.unwrap();
     }
 
-    pub fn is_leader(&self) -> bool {
-        //self.store_server.is_leader()
-        false
-    }
-
     pub fn get_id(&self) -> u64 {
         self.store_server.get_id()
+    }
+
+    pub fn get_peers(&self) -> Vec<u64> {
+        self.store_server.get_peers()
+    }
+    pub fn reconfigure(&self, new_configuration: Vec<u64>, metadata: Option<Vec<u8>>) {
+        self.store_server.reconfigure(new_configuration, metadata)
     }
 }
 
@@ -71,12 +73,10 @@ pub async fn setup(number_of_replicas: u64) ->Vec<Replica> {
     // servers, etc.
     let mut replicas: Vec<Replica> = Vec::new();
     for id in 1..(number_of_replicas+1) {
-        println!("IN SET UP {}", id);
         let mut peers: Vec<u64> = (1..number_of_replicas+1).collect();
         peers.remove((id - 1) as usize);
         replicas.push(start_server(id, peers).await);
     }
-    println!("END SET UP");
     replicas
 }
 
@@ -105,11 +105,11 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
         let server_receiver = server.clone();
         let server_run  = server.clone();
         let server_leader  = server.clone();
+        let server_config  = server.clone();
 
         tokio::task::spawn(async move {
             match server_kill_receiver.await {
-                Ok(_) => { server_receiver.kill(true);
-                    log(format!("killlllllll").to_string());},
+                Ok(_) => { server_receiver.kill(true);},
                 Err(_) => println!("Received error in halt_receiver"),
             };
         });
@@ -117,11 +117,12 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
         let x = tokio::task::spawn(async move {
             server_run.run().await;
         });
-
-        //run_leader
         let y = tokio::task::spawn(async move {
             server_leader.run_leader().await;
         });
+        // let z = tokio::task::spawn(async move {
+        //     server_config.run_reconfiguration().await;
+        // });
 
         (x, y)
     };
@@ -173,6 +174,5 @@ pub async fn run_query(id: u64, line: String) -> Result<String, Box<dyn Error>>{
 pub async fn shutdown_replicas(mut replicas: Vec<Replica>) {
     while let Some(r) = replicas.pop() {
         r.shutdown().await;
-        log(format!("SHUTDOWN").to_string());
     }
 }

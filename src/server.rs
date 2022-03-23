@@ -122,7 +122,7 @@ impl Snapshot<StoreCommand> for KVSnapshot {
 
 /// Store configuration.
 #[derive(Debug)]
-struct StoreConfig {
+pub struct StoreConfig {
     /// Connection pool size.
     conn_pool_size: usize,
     query_results_holder: Arc<Mutex<QueryResultsHolder>>,
@@ -130,7 +130,7 @@ struct StoreConfig {
 
 #[derive(Derivative)]
 #[derivative(Debug)]
-struct Store {
+pub struct Store {
     /// Vector which contains all the replicated entries in-memory.
     log: Vec<StoreCommand>,
     /// Last promised round.
@@ -163,6 +163,7 @@ struct Store {
 
     pending_transitions: Vec<StoreCommand>,
     query_results_holder: Arc<Mutex<QueryResultsHolder>>,
+
 }
 
 
@@ -201,6 +202,7 @@ impl Store {
             conn_idx,
             pending_transitions: Vec::new(),
             query_results_holder: config.query_results_holder,
+
         }
     }
     
@@ -244,6 +246,9 @@ pub struct StoreServer<T: StoreTransport + Send + Sync> {
     query_results_holder: Arc<Mutex<QueryResultsHolder>>,
     this_id: u64,
     halt: Arc<Mutex<bool>>,
+    // reconfiguration
+    peers: Arc<Mutex<Vec<u64>>>,
+    last_cmd_read: u64
 }
 
 impl Storage<StoreCommand, KVSnapshot> for Store
@@ -403,7 +408,7 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         
         let mut ble_config = BLEConfig::default();
         ble_config.set_pid(this_id);
-        ble_config.set_peers(peers);
+        ble_config.set_peers(peers.clone());
         ble_config.set_hb_delay(HEARTBEAT_TIMEOUT);     // a leader timeout of 20 ticks
 
         let ble = BallotLeaderElection::with(ble_config);
@@ -417,6 +422,8 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
             query_results_holder,
             this_id,
             halt: Arc::new(Mutex::new(false)),
+            peers: Arc::new(Mutex::new(peers.clone())),
+            last_cmd_read: 0
         })
     }
     
@@ -431,10 +438,6 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
             log::info!("run run");
             let mut ble = self.ble.lock().unwrap();
             let mut replica = self.replica.lock().unwrap();
-            // if let Some(leader) = ble.tick() {
-            //     // a new leader is elected, pass it to SequencePaxos.
-            //     replica.handle_leader(leader);
-            // }
 
             for out_msg in ble.get_outgoing_msgs() {
                 let receiver = out_msg.to;
@@ -457,19 +460,59 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
             log::info!("run run leader");
             tokio::time::sleep(Duration::from_millis(100)).await;
             if *self.halt.lock().unwrap() {
-               // log(format!("killlllllll inside after BREAK leader").to_string());
                 break
             }
-            let mut sequence_paxos = self.replica.lock().unwrap();
+            let mut replica = self.replica.lock().unwrap();
             let mut ballot_leader_election = self.ble.lock().unwrap();
 
             if let Some(leader) = ballot_leader_election.tick() {
                 // a new leader is elected, pass it to SequencePaxos.
-                sequence_paxos.handle_leader(leader);
+                replica.handle_leader(leader);
             }
         }
     }
+    // // /// Run the blocking event loop.
+    // pub async fn run_reconfiguration(&self) {
+    //     loop {
+    //         log::info!("run run leader");
+    //         tokio::time::sleep(Duration::from_millis(150)).await;
+    //         if *self.halt.lock().unwrap() {
+    //              break
+    //          }
+    //         let mut replica = self.replica.lock().unwrap();
+    //         let decided_entries: Option<Vec<omnipaxos_core::util::LogEntry<StoreCommand, KVSnapshot>>> = replica.read_decided_suffix(self.last_cmd_read);
+    //         if let Some(de) = decided_entries {
+    //             for d in de {
+    //                 match d {
+    //                     omnipaxos_core::util::LogEntry::StopSign(stopsign) => {
+    //                         self.increase_cmd();
+    //                         let new_configuration = stopsign.nodes;
+    //                         if new_configuration.contains(&(self.this_id)) {
+    //                             // create a store
+    //                             let query_results_holder = Arc::new(Mutex::new(QueryResultsHolder::default()));
+    //                             let config = StoreConfig { conn_pool_size: 20, query_results_holder: query_results_holder.clone() };
+    //                             let store = Store::new(self.this_id, config);
+                                
+    //                             // new sequence paxos instance
+    //                             let mut sp_config = SequencePaxosConfig::default();
+    //                             sp_config.set_configuration_id(2);
+    //                             sp_config.set_pid(self.this_id);
+    //                             sp_config.set_peers(new_configuration);
 
+    //                             let replica = SequencePaxos::with(sp_config, store);
+    //                             self.set_replica(replica);
+    //                         }
+    //                     }
+    //                     _ => {
+    //                         todo!()
+    //                     }
+    //                 }
+    //             }
+    //         }
+
+    //     }
+    // }
+    
     /// Execute a SQL statement on the ChiselStore cluster.
     pub async fn query<S: AsRef<str>>(
         &self,
@@ -478,7 +521,6 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     ) -> Result<QueryResults, StoreError> {
         
         let results = {
-                log::info!("before notify");
                 let (notify, id) = {
                     let id = self.next_cmd_id.fetch_add(1, Ordering::SeqCst);
                     let cmd = StoreCommand {
@@ -493,7 +535,6 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
                     
                     let mut replica = self.replica.lock().unwrap();
                     replica.append(cmd).expect("Failed to append");
-                    log::info!("end of notify");
                     (notify, id)
                 };
                 log::info!("wait for notify");
@@ -522,9 +563,31 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
 
     /// kill the replica
     pub fn kill(&self, new_halt: bool) {
-        log(format!("killlllllll inside").to_string());
         let mut halt = self.halt.lock().unwrap();
         *halt = new_halt;
-        log(format!("killlllllll inside after {}", *halt).to_string());
     }
+
+    pub fn set_peers(&self, new_peers: Vec<u64>) {
+        let mut peers = self.peers.lock().unwrap();
+        *peers = new_peers;
+    }
+    pub fn get_peers(&self) -> Vec<u64> {
+        self.peers.lock().unwrap().to_vec()
+    }
+    /// set replica the replica
+    pub fn set_replica(&self, new_replica: SequencePaxos<StoreCommand, KVSnapshot, Store>) {
+        let mut replica = self.replica.lock().unwrap();
+        *replica = new_replica;
+    }
+
+    pub fn increase_cmd(&self) {
+        let mut last_cmd_read = self.last_cmd_read;
+        last_cmd_read = last_cmd_read + 1;
+    }
+    // reconfigure the server
+    pub fn reconfigure(&self, new_configuration: Vec<u64>, metadata: Option<Vec<u8>>) {
+        let rc = ReconfigurationRequest::with(new_configuration, metadata);
+        self.replica.lock().unwrap().reconfigure(rc).expect("Failed to propose reconfiguration");
+    }
+
 }

@@ -69,3 +69,26 @@ async fn test3_create_insert_select() {
     tokio::time::sleep(Duration::from_millis(20)).await;
     common::shutdown_replicas(replicas).await;
 }
+
+// #[tokio::test(flavor = "multi_thread")]
+// async fn test4_reconfiguration() {
+//     // set up 3 servers
+//     let replicas = common::setup(3).await;
+//     tokio::time::sleep(Duration::from_millis(20)).await;
+//     // run test
+//     // reconfigure
+//     // 3 will not be at the new configuration
+//     replicas.get(1).unwrap().reconfigure(vec![1, 2], None);
+    
+//     // wait some arbitrary time
+//     // hope it will be decided
+//     tokio::time::sleep(Duration::from_millis(40)).await;
+
+//     let peers_after = replicas.get(1).unwrap().get_peers();
+
+//     assert!(peers_after == vec![1, 2]);
+//     common::shutdown_replicas(replicas).await;
+// }
+
+//kill one of them either we can try to kill the leader or the follower
+    //do a query 

@@ -531,7 +531,7 @@ impl Rpc for RpcService {
         }
         Ok(Response::new(QueryResults { rows }))
     }
-
+   
     async fn message(&self, request: Request<RpcMessage>) -> Result<Response<Void>, tonic::Status> {
         let msg = request.into_inner();
         let to = msg.to;
