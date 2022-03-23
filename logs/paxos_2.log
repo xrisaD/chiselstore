@@ -1,6 +1,12 @@
-Mar 22 16:52:00.666 INFO Ballot Leader Election componentMar 22 16:52:02.910 DEBG Newly elected leader: Ballot { n: 0, priority: 0, pid: 0 }
-Mar 22 16:52:04.036 DEBG Newly elected leader: Ballot { n: 0, priority: 0, pid: 2 }
-Mar 22 16:52:04.042 DEBG Handling promise from 1 in Prepare phase
-r elected: Ballot { n: 0, priority: 0, pid: 0 }
-Mar 22 16:52:04.043 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 1 }, true)]
-Mar 22 16:52:04.045 DEBG BLE 2, New Leader elected: Ballot { n: 0, priority: 0, pid: 2 }
+Mar 23 12:46:10.693 INFO Ballot Leader Election componentMar 23 12:46:13.985 DEBG Newly elected leader: Ballot { n: 0, priority: 0, pid: 1 }
+Mar 23 12:46:15.074 DEBG Newly elected leader: Ballot { n: 0, priority: 0, pid: 2 }
+Mar 23 12:46:15.081 DEBG Handling promise from 1 in Prepare phase
+receive a majority of heartbeats []
+Mar 23 12:46:13.982 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 1 }, true)]
+Mar 23 12:46:13.988 DEBG BLE 2, New Leader elected: Ballot { n: 0, priority: 0, pid: 1 }
+Mar 23 12:46:15.075 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 1 }, true)]
+Mar 23 12:46:15.079 DEBG BLE 2, New Leader elected: Ballot { n: 0, priority: 0, pid: 2 }
+Mar 23 12:46:16.178 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 1 }, true)]
+Mar 23 12:46:17.283 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 1 }, true)]
+Mar 23 12:46:18.391 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 1 }, true)]
+Mar 23 12:46:19.487 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 1 }, true)]

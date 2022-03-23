@@ -66,7 +66,7 @@ impl Replica {
     }
 }
 
-pub async fn setup(number_of_replicas: u64) -> Vec<Replica> {
+pub async fn setup(number_of_replicas: u64) ->Vec<Replica> {
     // some setup code, like creating required files/directories, starting
     // servers, etc.
     let mut replicas: Vec<Replica> = Vec::new();
@@ -77,7 +77,7 @@ pub async fn setup(number_of_replicas: u64) -> Vec<Replica> {
         replicas.push(start_server(id, peers).await);
     }
     println!("END SET UP");
-    return replicas
+    replicas
 }
 
 use slog::info;

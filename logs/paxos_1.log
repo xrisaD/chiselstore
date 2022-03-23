@@ -1,6 +1,11 @@
-Mar 22 16:52:00.660 INFO Ballot Leader Election componentMar 22 16:52:02.910 DEBG Newly elected leader: Ballot { n: 0, priority: 0, pid: 0 }
-Mar 22 16:52:04.037 DEBG Newly elected leader: Ballot { n: 0, priority: 0, pid: 2 }
-ty: 0, pid: 2 }, false)]
-Mar 22 16:52:02.911 DEBG BLE 1, New Leader elected: Ballot { n: 0, priority: 0, pid: 0 }
-Mar 22 16:52:04.033 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 2 }, true)]
-Mar 22 16:52:04.039 DEBG BLE 1, New Leader elected: Ballot { n: 0, priority: 0, pid: 2 }
+Mar 23 12:46:10.680 INFO Ballot Leader Election componentMar 23 12:46:12.886 DEBG Newly elected leader: Ballot { n: 0, priority: 0, pid: 0 }
+Mar 23 12:46:13.978 DEBG Newly elected leader: Ballot { n: 0, priority: 0, pid: 1 }
+Mar 23 12:46:13.987 DEBG Handling promise from 2 in Prepare phase
+Mar 23 12:46:15.072 DEBG Newly elected leader: Ballot { n: 0, priority: 0, pid: 2 }
+Mar 23 12:46:15.082 WARN Tried to set snapshot at index: 1 but current compacted index is: 1
+BG BLE 1, New Leader elected: Ballot { n: 0, priority: 0, pid: 1 }
+Mar 23 12:46:15.073 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 2 }, true)]
+Mar 23 12:46:15.081 DEBG BLE 1, New Leader elected: Ballot { n: 0, priority: 0, pid: 2 }
+Mar 23 12:46:16.178 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 2 }, true)]
+Mar 23 12:46:17.283 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 2 }, true)]
+Mar 23 12:46:18.389 DEBG Received a majority of heartbeats [(Ballot { n: 0, priority: 0, pid: 2 }, true)]
