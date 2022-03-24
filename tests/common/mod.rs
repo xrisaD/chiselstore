@@ -8,10 +8,7 @@ use chiselstore::{
 use futures_util::future::FutureExt;
 
 use std::sync::Arc;
-use structopt::StructOpt;
 use tonic::transport::Server;
-use std::io::Write;
-use tokio::io::{AsyncBufReadExt, BufReader};
 
 pub mod proto {
     tonic::include_proto!("proto");
@@ -36,6 +33,8 @@ fn node_rpc_addr(id: u64) -> String {
     format!("http://{}:{}", host, port)
 }
 
+/// We keep the data of a Replica so we can run methods on it and kill it 
+/// We use it for test purposes
 pub struct Replica {
     store_server: std::sync::Arc<StoreServer<RpcTransport>>,
     server_kill_sender: tokio::sync::oneshot::Sender<()>,
@@ -47,6 +46,7 @@ pub struct Replica {
 
 
 impl Replica {
+    /// shut down the replica
     pub async fn shutdown(self) {
         self.rpc_kill_sender.send(());
         self.server_kill_sender.send(());
@@ -55,19 +55,24 @@ impl Replica {
         self.message_handle.await.unwrap();
         self.leader_handle.await.unwrap();
     }
-
+    
+    /// get the replica's id
     pub fn get_id(&self) -> u64 {
         self.store_server.get_id()
     }
 
+    /// get the replica's peers
     pub fn get_peers(&self) -> Vec<u64> {
         self.store_server.get_peers()
     }
+
+    /// reconfigure the replica 
     pub fn reconfigure(&self, new_configuration: Vec<u64>, metadata: Option<Vec<u8>>) {
         self.store_server.reconfigure(new_configuration, metadata)
     }
 }
 
+/// set up a specific number of replicas   
 pub async fn setup(number_of_replicas: u64) ->Vec<Replica> {
     // some setup code, like creating required files/directories, starting
     // servers, etc.
@@ -80,19 +85,7 @@ pub async fn setup(number_of_replicas: u64) ->Vec<Replica> {
     replicas
 }
 
-use slog::info;
-use sloggers::Build;
-use sloggers::terminal::{TerminalLoggerBuilder, Destination};
-use sloggers::types::Severity;
-fn log(s: String) {
-    let mut builder = TerminalLoggerBuilder::new();
-    builder.level(Severity::Debug);
-    builder.destination(Destination::Stderr);
-
-    let logger = builder.build().unwrap();
-    info!(logger, "{}", s);
-}
-
+/// start a replica
 async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
     let (host, port) = node_authority(id);
     let rpc_listen_addr = format!("{}:{}", host, port).parse().unwrap();
@@ -105,7 +98,7 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
         let server_receiver = server.clone();
         let server_run  = server.clone();
         let server_leader  = server.clone();
-        let server_config  = server.clone();
+        // let server_config  = server.clone();
 
         tokio::task::spawn(async move {
             match server_kill_receiver.await {
@@ -139,7 +132,7 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
             ret
         })
     };
-    // todo: check the results that there is not error
+   
     return Replica {
         store_server: server.clone(),
         server_kill_sender,
@@ -150,6 +143,7 @@ async fn start_server(id: u64, peers: Vec<u64>) ->Replica {
     }
 }
 
+/// run a query
 pub async fn run_query(id: u64, line: String) -> Result<String, Box<dyn Error>>{
     // create address for the replica
     let addr = node_rpc_addr(id);
@@ -171,6 +165,7 @@ pub async fn run_query(id: u64, line: String) -> Result<String, Box<dyn Error>>{
     Ok(res)
 }
 
+/// shut down all replicas
 pub async fn shutdown_replicas(mut replicas: Vec<Replica>) {
     while let Some(r) = replicas.pop() {
         r.shutdown().await;

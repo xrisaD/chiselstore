@@ -1,7 +1,7 @@
 //! ChiselStore RPC module.
 
 use crate::rpc::proto::rpc_server::Rpc;
-use crate::{Consistency, StoreCommand, KVSnapshot, StoreServer, StoreTransport};
+use crate::{StoreCommand, KVSnapshot, StoreServer, StoreTransport};
 use async_mutex::Mutex;
 use async_trait::async_trait;
 
@@ -15,19 +15,15 @@ use omnipaxos_core::ballot_leader_election::messages::{BLEMessage, HeartbeatMsg,
 use omnipaxos_core::ballot_leader_election::Ballot;
 use omnipaxos_core::util::SyncItem;
 use omnipaxos_core::storage::SnapshotType;
-use slog::{debug, info, trace, warn, Logger};
 
-
-// use slog::{o, Drain, Logger};
-
-//se std::option::Option;
 #[allow(missing_docs)]
 pub mod proto {
     tonic::include_proto!("proto");
 }
 
 use proto::rpc_client::RpcClient;
-// define all types of messages that Raft replicas pass between each other
+
+// define all types of messages that OmniPaxos replicas pass between each other
 use proto::{
     Query, QueryResults, QueryRow, Void, RpcMessage, B, RpcPromise, RpcAcceptedStopSign, RpcAcceptDecide, RpcAcceptSync, Command, StopSign, RpcDecide, RpcAccepted, Commands, RpcPrepare, RpcSyncItem, RpcSnapshotType, RpcSyncItemType, RpcFirstAccept, RpcAcceptStopSign, RpcDecideStopSign,
     RpcHeartbeatReply, RpcHeartbeatRequest, RpcBleMessage, RpcCompaction, RpcProposalForward, RpcPrepareReq, RpcSnapshotTypeEnum
@@ -505,24 +501,16 @@ impl Rpc for RpcService {
         request: Request<Query>,
     ) -> Result<Response<QueryResults>, tonic::Status> {
         let query = request.into_inner();
-        // choose consistency
-        let consistency =
-            proto::Consistency::from_i32(query.consistency).unwrap_or(proto::Consistency::Strong);
-        let consistency = match consistency {
-            proto::Consistency::Strong => Consistency::Strong,
-            proto::Consistency::RelaxedReads => Consistency::RelaxedReads,
-        };
+       
         // pass the query to the server
         let server = self.server.clone();
-        log::info!("before query! ");
-        let results = match server.query(query.sql, consistency).await {
+        let results = match server.query(query.sql).await {
             Ok(results) => results,
             Err(e) => {
                 log::info!("ERROR!");
                 return Err(Status::internal(format!("{}", e)))
             },
         };
-        log::info!("after query! ");
         let mut rows = vec![];
         for row in results.rows {
             rows.push(QueryRow {

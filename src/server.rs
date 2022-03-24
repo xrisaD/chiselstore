@@ -3,8 +3,6 @@
 use crate::errors::StoreError;
 use async_notify::Notify;
 use async_trait::async_trait;
-use crossbeam_channel as channel;
-use crossbeam_channel::{Receiver, Sender};
 use derivative::Derivative;
 use sqlite::{Connection, OpenFlags};
 use std::collections::HashMap;
@@ -12,20 +10,18 @@ use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use slog::{debug, info, trace, warn, Logger};
-// CHANGE:
-use tokio::sync::mpsc;
+use slog::{info};
 
-use omnipaxos_core::ballot_leader_election::{BLEConfig, BallotLeaderElection, Ballot};
-use omnipaxos_core::ballot_leader_election::messages::BLEMessage;
 use omnipaxos_core::{
+    ballot_leader_election:: {BLEConfig, BallotLeaderElection, Ballot},
+    ballot_leader_election::messages::BLEMessage,
     messages::Message,
-    sequence_paxos::{CompactionErr, ReconfigurationRequest, SequencePaxos, SequencePaxosConfig},
+    sequence_paxos::{ReconfigurationRequest, SequencePaxos, SequencePaxosConfig},
     storage::{Storage, Snapshot, StopSignEntry}
 };
 
-// Used for handling async queries
-// #[derive(Clone, Debug)]
+/// Used for handling async queries
+/// keep all query results and the notifies to notify that the query ran
 #[derive(Debug)]
 pub struct QueryResultsHolder {
     query_completion_notifiers: HashMap<u64, Arc<Notify>>,
@@ -33,18 +29,21 @@ pub struct QueryResultsHolder {
 }
 
 impl QueryResultsHolder {
+    /// insert a notifier for a specific command, given the unique id for the command
     pub fn insert_notifier(&mut self, id: u64, notifier: Arc<Notify>) {
         self.query_completion_notifiers.insert(id, notifier);
     }
 
+    /// push a query result and notify that it is done (decided and ran)
     pub fn push_result(&mut self, id: u64, result: Result<QueryResults, StoreError>) {
         if let Some(completion) = self.query_completion_notifiers.remove(&(id)) {
+            // save the result of this command
             self.results.insert(id, result);
-            log::info!("lets notify!!");
+            // notify that the command has been decided and run 
             completion.notify();
         }
     }
-
+    /// remove a result
     pub fn remove_result(&mut self, id: &u64) -> Option<Result<QueryResults, StoreError>> {
         self.results.remove(id)
     }
@@ -64,22 +63,12 @@ impl QueryResultsHolder {
 /// to the ChiselStore server.
 #[async_trait]
 pub trait StoreTransport {
-    /// Send a store command message `msg` to `to_id` node.
+    /// Send a paxos message `msg` to `to_id` node.
     fn send(&self, to_id: u64, msg: Message<StoreCommand, KVSnapshot>);
-
+    /// Send a ble message `msg` to `to_id` node.
     fn send_ble(&self, to_id: u64, msg: BLEMessage);
 }
 
-/// Consistency mode.
-#[derive(Debug)]
-pub enum Consistency {
-    /// Strong consistency. Both reads and writes go through the Raft leader,
-    /// which makes them linearizable.
-    Strong,
-    /// Relaxed reads. Reads are performed on the local node, which relaxes
-    /// read consistency and allows stale reads.
-    RelaxedReads,
-}
 
 /// Store command.
 ///
@@ -152,6 +141,7 @@ pub struct Store {
 
     /// ID of the node this Cluster objecti s on.
     this_id: u64,
+    // TODO: do we need these?
     /// Is this node the leader?
     leader: Option<u64>,
     leader_exists: AtomicBool,
@@ -161,7 +151,7 @@ pub struct Store {
     conn_pool: Vec<Arc<Mutex<Connection>>>,
     conn_idx: usize,
 
-    pending_transitions: Vec<StoreCommand>,
+    /// used to keep the 
     query_results_holder: Arc<Mutex<QueryResultsHolder>>,
 
 }
@@ -200,7 +190,6 @@ impl Store {
 
             conn_pool,
             conn_idx,
-            pending_transitions: Vec::new(),
             query_results_holder: config.query_results_holder,
 
         }
@@ -245,7 +234,10 @@ pub struct StoreServer<T: StoreTransport + Send + Sync> {
     transport: Arc<T>,
     query_results_holder: Arc<Mutex<QueryResultsHolder>>,
     this_id: u64,
+
+    // stop the server
     halt: Arc<Mutex<bool>>,
+
     // reconfiguration
     peers: Arc<Mutex<Vec<u64>>>,
     last_cmd_read: u64
@@ -274,13 +266,13 @@ impl Storage<StoreCommand, KVSnapshot> for Store
     }
 
     fn set_decided_idx(&mut self, ld: u64) {
-        // run queries
+        // get the queries that has been decided
         let queries_to_run = self.log[(self.ld as usize)..(ld as usize)].to_vec();
-        //let conn = self.get_connection();
         for q in queries_to_run.iter() {
             let conn = self.get_connection();
+            // we run the query and get the results
             let results = query(conn, q.sql.clone());
-
+            // 
             let mut query_results_holder = self.query_results_holder.lock().unwrap();
             query_results_holder.push_result(q.id, results);
         }
@@ -458,7 +450,7 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     pub async fn run_leader(&self) {
         loop {
             log::info!("run run leader");
-            tokio::time::sleep(Duration::from_millis(100)).await;
+            tokio::time::sleep(Duration::from_millis(500)).await;
             if *self.halt.lock().unwrap() {
                 break
             }
@@ -471,7 +463,7 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
             }
         }
     }
-    // // /// Run the blocking event loop.
+    // /// Run the blocking event loop.
     // pub async fn run_reconfiguration(&self) {
     //     loop {
     //         log::info!("run run leader");
@@ -517,36 +509,34 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     pub async fn query<S: AsRef<str>>(
         &self,
         stmt: S,
-        consistency: Consistency,
     ) -> Result<QueryResults, StoreError> {
         
         let results = {
-                let (notify, id) = {
-                    let id = self.next_cmd_id.fetch_add(1, Ordering::SeqCst);
-                    let cmd = StoreCommand {
-                        id: id,
-                        sql: stmt.as_ref().to_string(),
-                    };
-                    
-                    let notify = Arc::new(Notify::new());
-
-                    let mut query_results_holder = self.query_results_holder.lock().unwrap();
-                    query_results_holder.insert_notifier(id, notify.clone());
-                    
-                    let mut replica = self.replica.lock().unwrap();
-                    replica.append(cmd).expect("Failed to append");
-                    (notify, id)
+            let (notify, id) = {
+                let id = self.next_cmd_id.fetch_add(1, Ordering::SeqCst);
+                let cmd = StoreCommand {
+                    id: id,
+                    sql: stmt.as_ref().to_string(),
                 };
-                log::info!("wait for notify");
-                // wait for append (and decide) to finish in background
-                notify.notified().await;
-                log::info!("notify came");
-                let results = self.query_results_holder.lock().unwrap().remove_result(&id).unwrap();
-                // TODO: RETURN AN ERROR IF THIS IS AN
-                log::info!("results notify");
-                results?
+                // create a notifier for this command
+                let notify = Arc::new(Notify::new());
+                // save the notifier 
+                // so when the command is decided we can be notified
+                let mut query_results_holder = self.query_results_holder.lock().unwrap();
+                query_results_holder.insert_notifier(id, notify.clone());
+                
+                // append the command to the paxos instance
+                let mut replica = self.replica.lock().unwrap();
+                replica.append(cmd).expect("Failed to append");
+                (notify, id)
+            };
+            // wait for the command to be decided, run and save the result
+            notify.notified().await;
+            // we get the result and return it to the user
+            let results = self.query_results_holder.lock().unwrap().remove_result(&id).unwrap();
+            // TODO: RETURN AN ERROR IF THIS IS AN
+            results?
         };  
-        log::info!("END notify");
         Ok(results)
     }
 

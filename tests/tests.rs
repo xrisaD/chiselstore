@@ -54,7 +54,7 @@ async fn test2_create_insert_select() {
 #[tokio::test(flavor = "multi_thread")]
 async fn test3_create_insert_select() {
     // set up the servers
-    let mut replicas = common::setup(2).await;
+    let replicas = common::setup(3).await;
     tokio::time::sleep(Duration::from_millis(20)).await;
     // run test
     tokio::task::spawn(async {
