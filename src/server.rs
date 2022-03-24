@@ -558,4 +558,9 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         self.replica.lock().unwrap().reconfigure(rc).expect("Failed to propose reconfiguration");
     }
 
+    /// returns true if the node is the leader
+    pub fn is_leader(&self) -> bool {
+        let sequence_paxos = self.replica.lock().unwrap();
+        sequence_paxos.get_current_leader() == (self.this_id as u64)
+    }
 }

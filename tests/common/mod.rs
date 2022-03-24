@@ -70,6 +70,10 @@ impl Replica {
     pub fn reconfigure(&self, new_configuration: Vec<u64>, metadata: Option<Vec<u8>>) {
         self.store_server.reconfigure(new_configuration, metadata)
     }
+
+    pub fn is_leader(&self) -> bool {
+        self.store_server.is_leader()
+    }
 }
 
 /// set up a specific number of replicas   
