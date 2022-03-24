@@ -2,3 +2,5 @@
 Cargo.lock
 /examples/log
 /examples/logs
+*.db
+/logs
