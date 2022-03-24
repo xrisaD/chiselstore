@@ -6,11 +6,9 @@ use async_trait::async_trait;
 use derivative::Derivative;
 use sqlite::{Connection, OpenFlags};
 use std::collections::HashMap;
-use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
+use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
-
-use slog::{info};
 
 use omnipaxos_core::{
     ballot_leader_election:: {BLEConfig, BallotLeaderElection, Ballot},
@@ -84,7 +82,7 @@ pub struct StoreCommand {
 /// KVSnapshot
 #[derive(Clone, Debug)]
 pub struct KVSnapshot {
-    // the snapshotted data
+    /// the snapshotted data
     pub snapshotted: HashMap<u64, String>,
 }
 
@@ -117,6 +115,7 @@ pub struct StoreConfig {
     query_results_holder: Arc<Mutex<QueryResultsHolder>>,
 }
 
+/// a Store 
 #[derive(Derivative)]
 #[derivative(Debug)]
 pub struct Store {
@@ -129,8 +128,6 @@ pub struct Store {
     /// Length of the decided log.
     ld: u64,
 
-    // TMP snapshots impl
-
     /// Garbage collected index.
     trimmed_idx: u64,
     /// Stored snapshot
@@ -138,14 +135,8 @@ pub struct Store {
     /// Stored StopSign
     stopsign: Option<omnipaxos_core::storage::StopSignEntry>,
 
-
     /// ID of the node this Cluster objecti s on.
     this_id: u64,
-    // TODO: do we need these?
-    /// Is this node the leader?
-    leader: Option<u64>,
-    leader_exists: AtomicBool,
-
     
     #[derivative(Debug = "ignore")]
     conn_pool: Vec<Arc<Mutex<Connection>>>,
@@ -158,6 +149,7 @@ pub struct Store {
 
 
 impl Store {
+    /// Create a Store
     pub fn new(this_id: u64, config: StoreConfig) -> Self {
         let mut conn_pool = vec![];
         let conn_pool_size = config.conn_pool_size;
@@ -176,9 +168,6 @@ impl Store {
         let conn_idx = 0;
         Store {
             this_id,
-            leader: None,
-            leader_exists: AtomicBool::new(false),
-
             log: Vec::new(),
             n_prom: Ballot::default(),
             acc_round: Ballot::default(),
@@ -194,8 +183,7 @@ impl Store {
 
         }
     }
-    
-
+    /// get connection
     pub fn get_connection(&mut self) -> Arc<Mutex<Connection>> {
         let idx = self.conn_idx % self.conn_pool.len();
         let conn = &self.conn_pool[idx];
@@ -361,19 +349,6 @@ pub struct QueryResults {
     pub rows: Vec<QueryRow>,
 }
 
-use sloggers::Build;
-use sloggers::terminal::{TerminalLoggerBuilder, Destination};
-use sloggers::types::Severity;
-fn log(s: String) {
-    let mut builder = TerminalLoggerBuilder::new();
-    builder.level(Severity::Debug);
-    builder.destination(Destination::Stderr);
-
-    let logger = builder.build().unwrap();
-    info!(logger, "{}", s);
-}
-
-const NOP_TRANSITION_ID: u64 = 0;
 const HEARTBEAT_TIMEOUT: u64 =  10;
 impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     /// Start a new server as part of a ChiselStore cluster.
@@ -383,11 +358,6 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         let query_results_holder = Arc::new(Mutex::new(QueryResultsHolder::default()));
         let config = StoreConfig { conn_pool_size: 20, query_results_holder: query_results_holder.clone() };
         let store = Store::new(this_id, config);
-        //let store = Arc::new(Mutex::new(store1));
-        let noop = StoreCommand {
-            id: NOP_TRANSITION_ID,
-            sql: "".to_string(),
-        };
 
         let mut sp_config = SequencePaxosConfig::default();
         // TODO: What is a congiguration id?
@@ -401,7 +371,7 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         let mut ble_config = BLEConfig::default();
         ble_config.set_pid(this_id);
         ble_config.set_peers(peers.clone());
-        ble_config.set_hb_delay(HEARTBEAT_TIMEOUT);     // a leader timeout of 20 ticks
+        ble_config.set_hb_delay(HEARTBEAT_TIMEOUT); // a leader timeout of 20 ticks
 
         let ble = BallotLeaderElection::with(ble_config);
         let ble =  Arc::new(Mutex::new(ble));
@@ -419,15 +389,14 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         })
     }
     
+    /// get outgoing messages from paxos and ble
     pub async fn run(&self) {
         loop {  
             tokio::time::sleep(Duration::from_millis(1)).await;
             // let halt = *self.halt.lock().unwrap();
             if *self.halt.lock().unwrap() {
-               // log(format!("killlllllll inside after BREAK {}", halt).to_string());
                 break
             }
-            log::info!("run run");
             let mut ble = self.ble.lock().unwrap();
             let mut replica = self.replica.lock().unwrap();
 
@@ -446,10 +415,9 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         }
     }
     
-    // /// Run the blocking event loop.
+    /// get the leader
     pub async fn run_leader(&self) {
         loop {
-            log::info!("run run leader");
             tokio::time::sleep(Duration::from_millis(500)).await;
             if *self.halt.lock().unwrap() {
                 break
@@ -540,13 +508,17 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         Ok(results)
     }
 
+    /// handle an incoming message
     pub fn handle(&self, msg: Message<StoreCommand, KVSnapshot>) {
         self.replica.lock().unwrap().handle(msg);
     }
+
+    /// handle an incoming ble message
     pub fn handle_ble(&self, msg: BLEMessage) {
         self.ble.lock().unwrap().handle(msg);
     }
 
+    /// get server id
     pub fn get_id(&self) -> u64 {
         self.this_id
     }
@@ -557,10 +529,14 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         *halt = new_halt;
     }
 
+    /// set peers
     pub fn set_peers(&self, new_peers: Vec<u64>) {
         let mut peers = self.peers.lock().unwrap();
         *peers = new_peers;
     }
+
+
+    /// get peers
     pub fn get_peers(&self) -> Vec<u64> {
         self.peers.lock().unwrap().to_vec()
     }
@@ -570,11 +546,13 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
         *replica = new_replica;
     }
 
-    pub fn increase_cmd(&self) {
-        let mut last_cmd_read = self.last_cmd_read;
-        last_cmd_read = last_cmd_read + 1;
-    }
-    // reconfigure the server
+    /// increase the last command read number
+    // pub fn increase_cmd(&self) {
+    //     let mut last_cmd_read = self.last_cmd_read;
+    //     last_cmd_read = last_cmd_read + 1;
+    // }
+    
+    /// reconfigure the server
     pub fn reconfigure(&self, new_configuration: Vec<u64>, metadata: Option<Vec<u8>>) {
         let rc = ReconfigurationRequest::with(new_configuration, metadata);
         self.replica.lock().unwrap().reconfigure(rc).expect("Failed to propose reconfiguration");

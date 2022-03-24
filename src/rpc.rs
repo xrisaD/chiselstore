@@ -77,10 +77,6 @@ impl ConnectionPool {
 }
 
 // Connections
-// Arc and Mutext: for thread safety and shared data protextion respectively
-// HashMap<String, Arc<ConnectionPool>>:
-// so given a string we can find a connectionPool
-// what is this string?
 #[derive(Debug, Clone)]
 struct Connections(Arc<Mutex<HashMap<String, Arc<ConnectionPool>>>>);
 
@@ -103,7 +99,6 @@ impl Connections {
 }
 
 /// RPC transport.
-/// an RPC transport has a node_addr and connections
 #[derive(Derivative)]
 #[derivative(Debug)]
 pub struct RpcTransport {
@@ -236,7 +231,7 @@ impl StoreTransport for RpcTransport {
                     }
                 }
 
-                let themessage = Rpcacceptsync(RpcAcceptSync{n: ballot, sync_item, sync_idx: x.sync_idx, decide_idx: x.decide_idx, stopsign});
+                let themessage = Rpcacceptsync(RpcAcceptSync{n: ballot, sync_item: sync_item, sync_idx: x.sync_idx, decide_idx: x.decide_idx, stopsign});
                 let request = RpcMessage {to, from, message: Some(themessage)};
 
                 let peer = (self.node_addr)(to_id);
@@ -949,17 +944,17 @@ impl Rpc for RpcService {
         match msg.message {
             Some(Heartbeatreply(x)) => {  
                 //log::info!("[BLE_MESSAGE] Reply");
-                let mut isOk: bool =  true;
+                let mut is_ok: bool =  true;
                 let mut ballot = None;
                 match x.ballot {
                     Some(b) => {
                         ballot = Some(Ballot {n: b.n, priority: b.priority, pid: b.pid});
                     }
                     None => {
-                        isOk = false;
+                        is_ok = false;
                     }
                 }
-                if isOk {
+                if is_ok {
                     let theblemessage = HeartbeatMsg::Reply(HeartbeatReply{round: x.round, ballot: ballot.unwrap(), majority_connected: x.majority_connected});
                     let msg = omnipaxos_core::ballot_leader_election::messages::BLEMessage{to,from, msg:theblemessage};
                     let server = self.server.clone();
