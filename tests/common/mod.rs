@@ -74,6 +74,19 @@ impl Replica {
     pub fn is_leader(&self) -> bool {
         self.store_server.is_leader()
     }
+
+    /// snapshotting 
+    pub fn snapshot(&self, snapshot_idx: Option<u64>) -> bool {
+        self.store_server.snapshot(snapshot_idx)
+    }
+
+    pub fn read_snapshotted_entry(&self, sn_idx: u64) -> bool {
+        self.store_server.read_snapshotted_entry(sn_idx)
+    }
+
+    pub fn get_compacted_idx(&self) -> u64 {
+        self.store_server.get_compacted_idx()
+    }
 }
 
 /// set up a specific number of replicas   

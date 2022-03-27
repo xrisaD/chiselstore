@@ -89,8 +89,8 @@ async fn test6_kill_a_node() {
         common::run_query(1, String::from("CREATE TABLE IF NOT EXISTS T6 (ID INTEGER);")).await.unwrap();
     }).await.unwrap();
 
-    let leader = replicas.remove(0);
-    leader.shutdown().await;
+    let kill_replica = replicas.remove(0);
+    kill_replica.shutdown().await;
     let living_replica_id = replicas[0].get_id();
     tokio::task::spawn(async move {
         common::run_query(living_replica_id, String::from("INSERT INTO T6 VALUES(1);")).await.unwrap();
@@ -99,5 +99,23 @@ async fn test6_kill_a_node() {
     tokio::task::spawn(async move {
         common::run_query(living_replica_id, String::from("DROP TABLE T6;")).await.unwrap();
     }).await.unwrap();
+    common::shutdown_replicas(replicas).await;
+}
+
+#[tokio::test(flavor = "multi_thread")]
+async fn test7_snapshotting() {
+    let replicas = common::setup(2).await;
+    tokio::task::spawn(async {
+        common::run_query(1, String::from("CREATE TABLE IF NOT EXISTS T7 (ID INTEGER);")).await.unwrap();
+        common::run_query(1, String::from("INSERT INTO T7 (ID) VALUES (1);")).await.unwrap();
+        common::run_query(1, String::from("INSERT INTO T7 (ID) VALUES (2);")).await.unwrap();
+        common::run_query(1, String::from("INSERT INTO T7 (ID) VALUES (3);")).await.unwrap();
+    }).await.unwrap();
+
+    // we should be able to snapshot these values
+    let is_snapshotted = replicas.get(0).unwrap().snapshot(Some(2));
+    // let compacted_idx = replicas.get(0).unwrap().get_compacted_idx();
+
+    assert!(is_snapshotted == true);
     common::shutdown_replicas(replicas).await;
 }

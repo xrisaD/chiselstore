@@ -23,9 +23,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             sql: line.to_string(),
             consistency: Consistency::RelaxedReads as i32,
         });
-        println!("BEFORE EXECUTE");
         let response = client.execute(query).await?;
-        println!("AFTER EXECUTE");
         let response = response.into_inner();
         for row in response.rows {
             println!("{:?}", row.values);

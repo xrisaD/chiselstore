@@ -15,7 +15,8 @@ use omnipaxos_core::{
     ballot_leader_election::messages::BLEMessage,
     messages::Message,
     sequence_paxos::{ReconfigurationRequest, SequencePaxos, SequencePaxosConfig},
-    storage::{Storage, Snapshot, StopSignEntry}
+    storage::{Storage, Snapshot, StopSignEntry},
+    util::{LogEntry}
 };
 
 /// Used for handling async queries
@@ -562,5 +563,33 @@ impl<T: StoreTransport + Send + Sync> StoreServer<T> {
     pub fn is_leader(&self) -> bool {
         let sequence_paxos = self.replica.lock().unwrap();
         sequence_paxos.get_current_leader() == (self.this_id as u64)
+    }
+
+    /// returns true if the snapshotted completed successfully else false
+    pub fn snapshot(&self, snapshot_idx: Option<u64>) -> bool{ 
+        // let local_only = false; // snapshots will be taken by all nodes.
+        match self.replica.lock().unwrap().trim(snapshot_idx) {
+            Ok(_) => {
+                // later, we can see that the snapshot succeeded with `seq_paxos.get_compacted_idx()`
+                return true;
+            }
+            Err(_) => {
+                return false;
+            }
+        }
+    }
+
+    /// returns true if the entry is snapshotted
+    pub fn read_snapshotted_entry(&self, sn_idx: u64) -> bool{
+        if let Some(e) = self.replica.lock().unwrap().read(sn_idx) {
+            match e {
+                LogEntry::Snapshotted(s) => { return true; }
+                _other => { return false;}
+            }
+        }
+        return false;
+    }
+    pub fn get_compacted_idx(&self) -> u64 {
+        self.replica.lock().unwrap().get_compacted_idx()
     }
 }
